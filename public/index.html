@@ -6,12 +6,615 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <!-- WordPress -->
+    <link rel="stylesheet" id="dashicons-css" href="http://thepersonaldev.local/wp-includes/css/dashicons.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="admin-bar-css" href="http://thepersonaldev.local/wp-includes/css/admin-bar.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="site-health-css" href="http://thepersonaldev.local/wp-admin/css/site-health.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="thickbox-css" href="http://thepersonaldev.local/wp-includes/js/thickbox/thickbox.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="common-css" href="http://thepersonaldev.local/wp-admin/css/common.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="forms-css" href="http://thepersonaldev.local/wp-admin/css/forms.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="admin-menu-css" href="http://thepersonaldev.local/wp-admin/css/admin-menu.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="dashboard-css" href="http://thepersonaldev.local/wp-admin/css/dashboard.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="list-tables-css" href="http://thepersonaldev.local/wp-admin/css/list-tables.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="edit-css" href="http://thepersonaldev.local/wp-admin/css/edit.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="revisions-css" href="http://thepersonaldev.local/wp-admin/css/revisions.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="media-css" href="http://thepersonaldev.local/wp-admin/css/media.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="themes-css" href="http://thepersonaldev.local/wp-admin/css/themes.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="about-css" href="http://thepersonaldev.local/wp-admin/css/about.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="nav-menus-css" href="http://thepersonaldev.local/wp-admin/css/nav-menus.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="wp-pointer-css" href="http://thepersonaldev.local/wp-includes/css/wp-pointer.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="widgets-css" href="http://thepersonaldev.local/wp-admin/css/widgets.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="site-icon-css" href="http://thepersonaldev.local/wp-admin/css/site-icon.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="l10n-css" href="http://thepersonaldev.local/wp-admin/css/l10n.css?ver=5.4" media="all">
+    <link rel="stylesheet" id="buttons-css" href="http://thepersonaldev.local/wp-includes/css/buttons.css?ver=5.4" media="all">
   </head>
-  <body>
+  <body class="wp-admin wp-core-ui js index-php auto-fold admin-bar branch-5-4 version-5-4 admin-color-fresh locale-en-us customize-support svg vsc-initialized">
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+
+    <div id="wpwrap">
+      <div id="adminmenumain" style="margin-top: 32px" role="navigation" aria-label="Main menu">
+        <a href="#wpbody-content" class="screen-reader-shortcut">Skip to main content</a>
+        <a href="#wp-toolbar" class="screen-reader-shortcut">Skip to toolbar</a>
+        <div id="adminmenuback"></div>
+        <div id="adminmenuwrap">
+          <ul id="adminmenu">
+            <li class="wp-first-item wp-has-submenu wp-has-current-submenu wp-menu-open menu-top menu-top-first menu-icon-dashboard menu-top-last" id="menu-dashboard">
+              <a href="index.php" class="wp-first-item wp-has-submenu wp-has-current-submenu wp-menu-open menu-top menu-top-first menu-icon-dashboard menu-top-last" aria-haspopup="false">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-dashboard"><br></div>
+                <div class="wp-menu-name">Dashboard</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Dashboard</li>
+                <li class="wp-first-item current"><a href="index.php" class="wp-first-item current" aria-current="page">Home</a></li>
+                <li><a href="update-core.php">Updates <span class="update-plugins count-4"><span class="update-count">4</span></span></a></li>
+              </ul>
+            </li>
+            <li class="wp-not-current-submenu wp-menu-separator" aria-hidden="true">
+              <div class="separator"></div>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-post open-if-no-js menu-top-first" id="menu-posts">
+              <a href="edit.php" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-post open-if-no-js menu-top-first" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-post"><br></div>
+                <div class="wp-menu-name">Posts</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Posts</li>
+                <li class="wp-first-item"><a href="edit.php" class="wp-first-item">All Posts</a></li>
+                <li><a href="post-new.php">Add New</a></li>
+                <li><a href="edit-tags.php?taxonomy=category">Categories</a></li>
+                <li><a href="edit-tags.php?taxonomy=post_tag">Tags</a></li>
+              </ul>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-media" id="menu-media">
+              <a href="upload.php" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-media" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-media"><br></div>
+                <div class="wp-menu-name">Media</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Media</li>
+                <li class="wp-first-item"><a href="upload.php" class="wp-first-item">Library</a></li>
+                <li><a href="media-new.php">Add New</a></li>
+              </ul>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-page" id="menu-pages">
+              <a href="edit.php?post_type=page" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-page" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-page"><br></div>
+                <div class="wp-menu-name">Pages</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Pages</li>
+                <li class="wp-first-item"><a href="edit.php?post_type=page" class="wp-first-item">All Pages</a></li>
+                <li><a href="post-new.php?post_type=page">Add New</a></li>
+              </ul>
+            </li>
+            <li class="wp-not-current-submenu menu-top menu-icon-comments" id="menu-comments">
+              <a href="edit-comments.php" class="wp-not-current-submenu menu-top menu-icon-comments">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-comments"><br></div>
+                <div class="wp-menu-name">Comments <span class="awaiting-mod count-0"><span class="pending-count" aria-hidden="true">0</span><span class="comments-in-moderation-text screen-reader-text">0 Comments in moderation</span></span></div>
+              </a>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-tpd_project" id="menu-posts-tpd_project">
+              <a href="edit.php?post_type=tpd_project" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-tpd_project" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image svg" style="background-image: url(&quot;data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZm9jdXNhYmxlPSJmYWxzZSIgZGF0YS1wcmVmaXg9ImZhcyIgZGF0YS1pY29uPSJicmllZmNhc2UiIHJvbGU9ImltZyIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGNsYXNzPSJzdmctaW5saW5lLS1mYSBmYS1icmllZmNhc2UgZmEtdy0xNiBmYS0zeCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBzdHlsZT0iZmlsbDojYTBhNWFhIj48cGF0aCBmaWxsPSIjYTBhNWFhIiBkPSJNMzIwIDMzNmMwIDguODQtNy4xNiAxNi0xNiAxNmgtOTZjLTguODQgMC0xNi03LjE2LTE2LTE2di00OEgwdjE0NGMwIDI1LjYgMjIuNCA0OCA0OCA0OGg0MTZjMjUuNiAwIDQ4LTIyLjQgNDgtNDhWMjg4SDMyMHY0OHptMTQ0LTIwOGgtODBWODBjMC0yNS42LTIyLjQtNDgtNDgtNDhIMTc2Yy0yNS42IDAtNDggMjIuNC00OCA0OHY0OEg0OGMtMjUuNiAwLTQ4IDIyLjQtNDggNDh2ODBoNTEydi04MGMwLTI1LjYtMjIuNC00OC00OC00OHptLTE0NCAwSDE5MlY5NmgxMjh2MzJ6IiBjbGFzcz0iIiBzdHlsZT0iZmlsbDojYTBhNWFhIi8+PC9zdmc+&quot;) !important;"><br></div>
+                <div class="wp-menu-name">Projects</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Projects</li>
+                <li class="wp-first-item"><a href="edit.php?post_type=tpd_project" class="wp-first-item">Projects</a></li>
+                <li><a href="post-new.php?post_type=tpd_project">Add New</a></li>
+                <li><a href="edit-tags.php?taxonomy=project_tag&amp;post_type=tpd_project">Tags</a></li>
+              </ul>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top toplevel_page_wpforms-overview menu-top-last" id="toplevel_page_wpforms-overview">
+              <a href="admin.php?page=wpforms-overview" class="wp-has-submenu wp-not-current-submenu menu-top toplevel_page_wpforms-overview menu-top-last" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image svg" style="background-image: url(&quot;data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTc5MiIgaGVpZ2h0PSIxNzkyIiB2aWV3Qm94PSIwIDAgMTc5MiAxNzkyIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGZpbGw9IiNhMGE1YWEiIGQ9Ik02NDMgOTExdjEyOGgtMjUydi0xMjhoMjUyem0wLTI1NXYxMjdoLTI1MnYtMTI3aDI1MnptNzU4IDUxMXYxMjhoLTM0MXYtMTI4aDM0MXptMC0yNTZ2MTI4aC02NzJ2LTEyOGg2NzJ6bTAtMjU1djEyN2gtNjcydi0xMjdoNjcyem0xMzUgODYwdi0xMjQwcTAtOC02LTE0dC0xNC02aC0zMmwtMzc4IDI1Ni0yMTAtMTcxLTIxMCAxNzEtMzc4LTI1NmgtMzJxLTggMC0xNCA2dC02IDE0djEyNDBxMCA4IDYgMTR0MTQgNmgxMjQwcTggMCAxNC02dDYtMTR6bS04NTUtMTExMGwxODUtMTUwaC00MDZ6bTQzMCAwbDIyMS0xNTBoLTQwNnptNTUzLTEzMHYxMjQwcTAgNjItNDMgMTA1dC0xMDUgNDNoLTEyNDBxLTYyIDAtMTA1LTQzdC00My0xMDV2LTEyNDBxMC02MiA0My0xMDV0MTA1LTQzaDEyNDBxNjIgMCAxMDUgNDN0NDMgMTA1eiIvPjwvc3ZnPg==&quot;) !important;"><br></div>
+                <div class="wp-menu-name">WPForms</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">WPForms</li>
+                <li class="wp-first-item"><a href="admin.php?page=wpforms-overview" class="wp-first-item">All Forms</a></li>
+                <li><a href="admin.php?page=wpforms-builder">Add New</a></li>
+                <li><a href="admin.php?page=wpforms-entries">Entries</a></li>
+                <li><a href="admin.php?page=wpforms-settings">Settings</a></li>
+                <li><a href="admin.php?page=wpforms-tools">Tools</a></li>
+                <li><a href="admin.php?page=wpforms-addons"><span style="color:#f18500">Addons</span></a></li>
+                <li><a href="admin.php?page=wpforms-analytics">Analytics</a></li>
+                <li><a href="admin.php?page=wpforms-smtp">SMTP</a></li>
+                <li><a href="admin.php?page=wpforms-about">About Us</a></li>
+                <li><a href="admin.php?page=wpforms-community">Community</a></li>
+              </ul>
+            </li>
+            <li class="wp-not-current-submenu wp-menu-separator" aria-hidden="true">
+              <div class="separator"></div>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-appearance menu-top-first" id="menu-appearance">
+              <a href="themes.php" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-appearance menu-top-first" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-appearance"><br></div>
+                <div class="wp-menu-name">Appearance</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Appearance</li>
+                <li class="wp-first-item"><a href="themes.php" class="wp-first-item">Themes</a></li>
+                <li class="hide-if-no-customize"><a href="customize.php?return=%2Fwp-admin%2Findex.php" class="hide-if-no-customize">Customize</a></li>
+                <li><a href="widgets.php">Widgets</a></li>
+                <li><a href="nav-menus.php">Menus</a></li>
+                <li><a href="theme-editor.php">Theme Editor</a></li>
+              </ul>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-plugins" id="menu-plugins">
+              <a href="plugins.php" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-plugins" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-plugins"><br></div>
+                <div class="wp-menu-name">Plugins <span class="update-plugins count-0"><span class="plugin-count">0</span></span></div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Plugins <span class="update-plugins count-0"><span class="plugin-count">0</span></span></li>
+                <li class="wp-first-item"><a href="plugins.php" class="wp-first-item">Installed Plugins</a></li>
+                <li><a href="plugin-install.php">Add New</a></li>
+                <li><a href="plugin-editor.php">Plugin Editor</a></li>
+              </ul>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-users" id="menu-users">
+              <a href="users.php" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-users" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-users"><br></div>
+                <div class="wp-menu-name">Users</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Users</li>
+                <li class="wp-first-item"><a href="users.php" class="wp-first-item">All Users</a></li>
+                <li><a href="user-new.php">Add New</a></li>
+                <li><a href="profile.php">Your Profile</a></li>
+              </ul>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-tools" id="menu-tools">
+              <a href="tools.php" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-tools" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-tools"><br></div>
+                <div class="wp-menu-name">Tools</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Tools</li>
+                <li class="wp-first-item"><a href="tools.php" class="wp-first-item">Available Tools</a></li>
+                <li><a href="import.php">Import</a></li>
+                <li><a href="export.php">Export</a></li>
+                <li><a href="site-health.php">Site Health</a></li>
+                <li><a href="export-personal-data.php">Export Personal Data</a></li>
+                <li><a href="erase-personal-data.php">Erase Personal Data</a></li>
+              </ul>
+            </li>
+            <li class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-settings menu-top-last" id="menu-settings">
+              <a href="options-general.php" class="wp-has-submenu wp-not-current-submenu menu-top menu-icon-settings menu-top-last" aria-haspopup="true">
+                <div class="wp-menu-arrow">
+                  <div></div>
+                </div>
+                <div class="wp-menu-image dashicons-before dashicons-admin-settings"><br></div>
+                <div class="wp-menu-name">Settings</div>
+              </a>
+              <ul class="wp-submenu wp-submenu-wrap">
+                <li class="wp-submenu-head" aria-hidden="true">Settings</li>
+                <li class="wp-first-item"><a href="options-general.php" class="wp-first-item">General</a></li>
+                <li><a href="options-writing.php">Writing</a></li>
+                <li><a href="options-reading.php">Reading</a></li>
+                <li><a href="options-discussion.php">Discussion</a></li>
+                <li><a href="options-media.php">Media</a></li>
+                <li><a href="options-permalink.php">Permalinks</a></li>
+                <li><a href="options-privacy.php">Privacy</a></li>
+              </ul>
+            </li>
+            <li id="collapse-menu" class="hide-if-no-js"><button type="button" id="collapse-button" aria-label="Collapse Main menu" aria-expanded="true"><span class="collapse-button-icon" aria-hidden="true"></span><span class="collapse-button-label">Collapse menu</span></button></li>
+          </ul>
+        </div>
+      </div>
+      <div id="wpcontent">
+        <div id="wpadminbar" class="nojq">
+          <div class="quicklinks" id="wp-toolbar" role="navigation" aria-label="Toolbar">
+            <ul id="wp-admin-bar-root-default" class="ab-top-menu">
+              <li id="wp-admin-bar-menu-toggle"><a class="ab-item" href="#" aria-expanded="false"><span class="ab-icon"></span><span class="screen-reader-text">Menu</span></a></li>
+              <li id="wp-admin-bar-wp-logo" class="menupop">
+                <a class="ab-item" aria-haspopup="true" href="http://thepersonaldev.local/wp-admin/about.php"><span class="ab-icon"></span><span class="screen-reader-text">About WordPress</span></a>
+                <div class="ab-sub-wrapper">
+                  <ul id="wp-admin-bar-wp-logo-default" class="ab-submenu">
+                    <li id="wp-admin-bar-about"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/about.php">About WordPress</a></li>
+                  </ul>
+                  <ul id="wp-admin-bar-wp-logo-external" class="ab-sub-secondary ab-submenu">
+                    <li id="wp-admin-bar-wporg"><a class="ab-item" href="https://wordpress.org/">WordPress.org</a></li>
+                    <li id="wp-admin-bar-documentation"><a class="ab-item" href="https://codex.wordpress.org/">Documentation</a></li>
+                    <li id="wp-admin-bar-support-forums"><a class="ab-item" href="https://wordpress.org/support/">Support</a></li>
+                    <li id="wp-admin-bar-feedback"><a class="ab-item" href="https://wordpress.org/support/forum/requests-and-feedback">Feedback</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li id="wp-admin-bar-site-name" class="menupop">
+                <a class="ab-item" aria-haspopup="true" href="http://thepersonaldev.local/">The Personal Dev</a>
+                <div class="ab-sub-wrapper">
+                  <ul id="wp-admin-bar-site-name-default" class="ab-submenu">
+                    <li id="wp-admin-bar-view-site"><a class="ab-item" href="http://thepersonaldev.local/">Visit Site</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li id="wp-admin-bar-updates"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/update-core.php" title="4 Theme Updates"><span class="ab-icon"></span><span class="ab-label">4</span><span class="screen-reader-text">4 Theme Updates</span></a></li>
+              <li id="wp-admin-bar-comments"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/edit-comments.php"><span class="ab-icon"></span><span class="ab-label awaiting-mod pending-count count-0" aria-hidden="true">0</span><span class="screen-reader-text comments-in-moderation-text">0 Comments in moderation</span></a></li>
+              <li id="wp-admin-bar-new-content" class="menupop">
+                <a class="ab-item" aria-haspopup="true" href="http://thepersonaldev.local/wp-admin/post-new.php"><span class="ab-icon"></span><span class="ab-label">New</span></a>
+                <div class="ab-sub-wrapper">
+                  <ul id="wp-admin-bar-new-content-default" class="ab-submenu">
+                    <li id="wp-admin-bar-new-post"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/post-new.php">Post</a></li>
+                    <li id="wp-admin-bar-new-media"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/media-new.php">Media</a></li>
+                    <li id="wp-admin-bar-new-page"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/post-new.php?post_type=page">Page</a></li>
+                    <li id="wp-admin-bar-new-tpd_project"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/post-new.php?post_type=tpd_project">Project</a></li>
+                    <li id="wp-admin-bar-new-user"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/user-new.php">User</a></li>
+                    <li id="wp-admin-bar-wpforms"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/admin.php?page=wpforms-builder">WPForms</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+            <ul id="wp-admin-bar-top-secondary" class="ab-top-secondary ab-top-menu">
+              <li id="wp-admin-bar-my-account" class="menupop with-avatar">
+                <a class="ab-item" aria-haspopup="true" href="http://thepersonaldev.local/wp-admin/profile.php">Howdy, <span class="display-name">dev</span><img alt="" src="http://0.gravatar.com/avatar/c1b6c8d8e531dac693f88cffa06128c2?s=26&amp;d=mm&amp;r=g" srcset="http://0.gravatar.com/avatar/c1b6c8d8e531dac693f88cffa06128c2?s=52&amp;d=mm&amp;r=g 2x" class="avatar avatar-26 photo" height="26" width="26"></a>
+                <div class="ab-sub-wrapper">
+                  <ul id="wp-admin-bar-user-actions" class="ab-submenu">
+                    <li id="wp-admin-bar-user-info"><a class="ab-item" tabindex="-1" href="http://thepersonaldev.local/wp-admin/profile.php"><img alt="" src="http://0.gravatar.com/avatar/c1b6c8d8e531dac693f88cffa06128c2?s=64&amp;d=mm&amp;r=g" srcset="http://0.gravatar.com/avatar/c1b6c8d8e531dac693f88cffa06128c2?s=128&amp;d=mm&amp;r=g 2x" class="avatar avatar-64 photo" height="64" width="64"><span class="display-name">dev</span></a></li>
+                    <li id="wp-admin-bar-edit-profile"><a class="ab-item" href="http://thepersonaldev.local/wp-admin/profile.php">Edit My Profile</a></li>
+                    <li id="wp-admin-bar-logout"><a class="ab-item" href="http://thepersonaldev.local/wp-login.php?action=logout&amp;_wpnonce=3f0ad1eafe">Log Out</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <a class="screen-reader-shortcut" href="http://thepersonaldev.local/wp-login.php?action=logout&amp;_wpnonce=3f0ad1eafe">Log Out</a>
+        </div>
+        <div id="wpbody">
+          <div id="wpbody-content">
+            <div class="wrap">
+              <h1>Dashboard</h1>
+  
+              <div id="app"></div>
+
+              <div id="dashboard-widgets-wrap">
+                <div id="dashboard-widgets-wrap">
+                  <div id="dashboard-widgets" class="metabox-holder">
+                    <div id="postbox-container-1" class="postbox-container">
+                      <div id="normal-sortables" class="meta-box-sortables ui-sortable">
+                        <div id="wpforms_reports_widget_lite" class="postbox ">
+                          <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text">Toggle panel: WPForms</span><span class="toggle-indicator" aria-hidden="true"></span></button>
+                          <h2 class="hndle ui-sortable-handle"><span>WPForms</span></h2>
+                          <div class="inside">
+                            <div class="wpforms-dash-widget wpforms-lite">
+                              <div class="wpforms-dash-widget-chart-block-container">
+                                <div class="wpforms-dash-widget-block">
+                                  <h3 id="wpforms-dash-widget-chart-title">
+                                    Total Entries				
+                                  </h3>
+                                  <select class="wpforms-dash-widget-select-timespan" style="display: none;">
+                                    <option>Last 7 days</option>
+                                  </select>
+                                </div>
+                                <div class="wpforms-dash-widget-block-upgrade">
+                                  <div class="wpforms-dash-widget-modal">
+                                    <h2>View all Form Entries inside WordPress Dashboard</h2>
+                                    <p>Form entries reports are not available.</p>
+                                    <p>Form entries are not stored in Lite.</p>
+                                    <p>Upgrade to Pro and get access to the reports.</p>
+                                    <p>
+                                      <a href="https://wpforms.com/lite-upgrade/?discount=LITEUPGRADE&amp;utm_source=WordPress&amp;utm_campaign=liteplugin&amp;utm_medium=dashboard-widget" class="wpforms-dash-widget-upgrade-btn" target="_blank" rel="noopener noreferrer">
+                                      Upgrade to WPForms Pro						</a>
+                                    </p>
+                                    <!--
+                                      <p>
+                                        <a href="https://wpforms.com" class="wpforms-dash-widget-site-link">
+                                          Go to WPForms.com						</a>
+                                      </p>
+                                      -->
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="wpforms-dash-widget-block">
+                                <h3>Total Entries by Form</h3>
+                              </div>
+                              <div id="wpforms-dash-widget-forms-list-block" class="wpforms-dash-widget-block wpforms-dash-widget-forms-list-block">
+                                <table id="wpforms-dash-widget-forms-list-table" cellspacing="0">
+                                  <tbody>
+                                    <tr data-form-id="82">
+                                      <td><span class="wpforms-dash-widget-form-title">Simple Contact Form</span></td>
+                                      <td>0</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div class="wpforms-dash-widget-recommended-plugin-block">
+                                <p>Recommended Plugin:				<b>MonsterInsights</b> -
+                                  <a href="http://thepersonaldev.local/wp-admin/update.php?action=install-plugin&amp;plugin=google-analytics-for-wordpress&amp;_wpnonce=37548c7c3b">Install</a> |
+                                  <a href="https://www.monsterinsights.com/?utm_source=wpformsplugin&amp;utm_medium=link&amp;utm_campaign=wpformsdashboardwidget">Learn More</a>
+                                </p>
+                              </div>
+                            </div>
+                            <!-- .wpforms-dash-widget -->
+                          </div>
+                        </div>
+                        <div id="dashboard_site_health" class="postbox ">
+                          <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text">Toggle panel: Site Health Status</span><span class="toggle-indicator" aria-hidden="true"></span></button>
+                          <h2 class="hndle ui-sortable-handle"><span>Site Health Status</span></h2>
+                          <div class="inside">
+                            <div class="health-check-title-section site-health-progress-wrapper hide-if-no-js orange">
+                              <div class="site-health-progress">
+                                <svg role="img" aria-hidden="true" focusable="false" width="100%" height="100%" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                  <circle r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0"></circle>
+                                  <circle id="bar" r="90" cx="100" cy="100" fill="transparent" stroke-dasharray="565.48" stroke-dashoffset="0" style="stroke-dashoffset: 163.991px;"></circle>
+                                </svg>
+                              </div>
+                              <div class="site-health-progress-label">Should be improved</div>
+                            </div>
+                            <p>
+                              Your site has critical issues that should be addressed as soon as possible to improve its performance and security.					
+                            </p>
+                            <p>
+                              Take a look at the <strong>8 items</strong> on the <a href="http://thepersonaldev.local/wp-admin/site-health.php">Site Health screen</a>.		
+                            </p>
+                          </div>
+                        </div>
+                        <div id="dashboard_right_now" class="postbox ">
+                          <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text">Toggle panel: At a Glance</span><span class="toggle-indicator" aria-hidden="true"></span></button>
+                          <h2 class="hndle ui-sortable-handle"><span>At a Glance</span></h2>
+                          <div class="inside">
+                            <div class="main">
+                              <ul>
+                                <li class="post-count"><a href="edit.php?post_type=post">1 Post</a></li>
+                                <li class="page-count"><a href="edit.php?post_type=page">9 Pages</a></li>
+                                <li class="comment-count"><a href="edit-comments.php">1 Comment</a></li>
+                                <li class="comment-mod-count
+                                  hidden		"><a href="edit-comments.php?comment_status=moderated" class="comments-in-moderation-text">0 Comments in moderation</a></li>
+                              </ul>
+                              <p id="wp-version-message"><span id="wp-version">WordPress 5.4 running <a href="themes.php">The Personal Dev 2020</a> theme.</span></p>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="dashboard_activity" class="postbox ">
+                          <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text">Toggle panel: Activity</span><span class="toggle-indicator" aria-hidden="true"></span></button>
+                          <h2 class="hndle ui-sortable-handle"><span>Activity</span></h2>
+                          <div class="inside">
+                            <div id="activity-widget">
+                              <div id="published-posts" class="activity-block">
+                                <h3>Recently Published</h3>
+                                <ul>
+                                  <li><span>Mar 28th, 10:36 pm</span> <a href="http://thepersonaldev.local/wp-admin/post.php?post=1&amp;action=edit" aria-label="Edit “Hello world!”">Hello world!</a></li>
+                                </ul>
+                              </div>
+                              <div id="latest-comments" class="activity-block">
+                                <h3>Recent Comments</h3>
+                                <ul id="the-comment-list" data-wp-lists="list:comment">
+                                  <li id="comment-1" class="comment even thread-even depth-1 comment-item approved">
+                                    <img alt="" src="http://1.gravatar.com/avatar/d7a973c7dab26985da5f961be7b74480?s=50&amp;d=mm&amp;r=g" srcset="http://1.gravatar.com/avatar/d7a973c7dab26985da5f961be7b74480?s=100&amp;d=mm&amp;r=g 2x" class="avatar avatar-50 photo" height="50" width="50">
+                                    <div class="dashboard-comment-wrap has-row-actions  has-avatar">
+                                      <p class="comment-meta">
+                                        From <cite class="comment-author"><a href="https://wordpress.org/" rel="external nofollow ugc" class="url">A WordPress Commenter</a></cite> on <a href="http://thepersonaldev.local/hello-world/">Hello world!</a> <span class="approve">[Pending]</span>			
+                                      </p>
+                                      <blockquote>
+                                        <p>Hi, this is a comment. To get started with moderating, editing, and deleting comments, please visit the Comments screen in…</p>
+                                      </blockquote>
+                                      <p class="row-actions"><span class="approve"><a href="comment.php?action=approvecomment&amp;p=1&amp;c=1&amp;_wpnonce=567fa1e19f" data-wp-lists="dim:the-comment-list:comment-1:unapproved:e7e7d3:e7e7d3:new=approved" class="vim-a aria-button-if-js" aria-label="Approve this comment" role="button">Approve</a></span><span class="unapprove"><a href="comment.php?action=unapprovecomment&amp;p=1&amp;c=1&amp;_wpnonce=567fa1e19f" data-wp-lists="dim:the-comment-list:comment-1:unapproved:e7e7d3:e7e7d3:new=unapproved" class="vim-u aria-button-if-js" aria-label="Unapprove this comment" role="button">Unapprove</a></span><span class="reply hide-if-no-js"> | <button type="button" onclick="window.commentReply &amp;&amp; commentReply.open('1','1');" class="vim-r button-link hide-if-no-js" aria-label="Reply to this comment">Reply</button></span><span class="edit"> | <a href="comment.php?action=editcomment&amp;c=1" aria-label="Edit this comment">Edit</a></span><span class="spam"> | <a href="comment.php?action=spamcomment&amp;p=1&amp;c=1&amp;_wpnonce=0627a87104" data-wp-lists="delete:the-comment-list:comment-1::spam=1" class="vim-s vim-destructive aria-button-if-js" aria-label="Mark this comment as spam" role="button">Spam</a></span><span class="trash"> | <a href="comment.php?action=trashcomment&amp;p=1&amp;c=1&amp;_wpnonce=0627a87104" data-wp-lists="delete:the-comment-list:comment-1::trash=1" class="delete vim-d vim-destructive aria-button-if-js" aria-label="Move this comment to the Trash" role="button">Trash</a></span><span class="view"> | <a class="comment-link" href="http://thepersonaldev.local/hello-world/#comment-1" aria-label="View this comment">View</a></span></p>
+                                    </div>
+                                  </li>
+                                </ul>
+                                <h3 class="screen-reader-text">View more comments</h3>
+                                <ul class="subsubsub">
+                                  <li class="all"><a href="http://thepersonaldev.local/wp-admin/edit-comments.php?comment_status=all">All <span class="count">(<span class="all-count">1</span>)</span></a> |</li>
+                                  <li class="mine"><a href="http://thepersonaldev.local/wp-admin/edit-comments.php?comment_status=mine&amp;user_id=1">Mine <span class="count">(<span class="mine-count">0</span>)</span></a> |</li>
+                                  <li class="moderated"><a href="http://thepersonaldev.local/wp-admin/edit-comments.php?comment_status=moderated">Pending <span class="count">(<span class="pending-count">0</span>)</span></a> |</li>
+                                  <li class="approved"><a href="http://thepersonaldev.local/wp-admin/edit-comments.php?comment_status=approved">Approved <span class="count">(<span class="approved-count">1</span>)</span></a> |</li>
+                                  <li class="spam"><a href="http://thepersonaldev.local/wp-admin/edit-comments.php?comment_status=spam">Spam <span class="count">(<span class="spam-count">0</span>)</span></a> |</li>
+                                  <li class="trash"><a href="http://thepersonaldev.local/wp-admin/edit-comments.php?comment_status=trash">Trash <span class="count">(<span class="trash-count">0</span>)</span></a></li>
+                                </ul>
+                                <form method="get">
+                                  <div id="com-reply" style="display:none;">
+                                    <div id="replyrow" style="display:none;">
+                                      <fieldset class="comment-reply">
+                                        <legend>
+                                          <span class="hidden" id="editlegend">Edit Comment</span>
+                                          <span class="hidden" id="replyhead">Reply to Comment</span>
+                                          <span class="hidden" id="addhead">Add new Comment</span>
+                                        </legend>
+                                        <div id="replycontainer">
+                                          <label for="replycontent" class="screen-reader-text">Comment</label>
+                                          <div id="wp-replycontent-wrap" class="wp-core-ui wp-editor-wrap html-active">
+                                            <link rel="stylesheet" id="editor-buttons-css" href="http://thepersonaldev.local/wp-includes/css/editor.css?ver=5.4" media="all">
+                                            <div id="wp-replycontent-editor-container" class="wp-editor-container">
+                                              <div id="qt_replycontent_toolbar" class="quicktags-toolbar"><input type="button" id="qt_replycontent_strong" class="ed_button button button-small" aria-label="Bold" value="b"><input type="button" id="qt_replycontent_em" class="ed_button button button-small" aria-label="Italic" value="i"><input type="button" id="qt_replycontent_link" class="ed_button button button-small" aria-label="Insert link" value="link"><input type="button" id="qt_replycontent_block" class="ed_button button button-small" aria-label="Blockquote" value="b-quote"><input type="button" id="qt_replycontent_del" class="ed_button button button-small" aria-label="Deleted text (strikethrough)" value="del"><input type="button" id="qt_replycontent_ins" class="ed_button button button-small" aria-label="Inserted text" value="ins"><input type="button" id="qt_replycontent_img" class="ed_button button button-small" aria-label="Insert image" value="img"><input type="button" id="qt_replycontent_ul" class="ed_button button button-small" aria-label="Bulleted list" value="ul"><input type="button" id="qt_replycontent_ol" class="ed_button button button-small" aria-label="Numbered list" value="ol"><input type="button" id="qt_replycontent_li" class="ed_button button button-small" aria-label="List item" value="li"><input type="button" id="qt_replycontent_code" class="ed_button button button-small" aria-label="Code" value="code"><input type="button" id="qt_replycontent_close" class="ed_button button button-small" title="Close all open tags" value="close tags"></div>
+                                              <textarea class="wp-editor-area" rows="20" cols="40" name="replycontent" id="replycontent"></textarea>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div id="edithead" style="display:none;">
+                                          <div class="inside">
+                                            <label for="author-name">Name</label>
+                                            <input type="text" name="newcomment_author" size="50" value="" id="author-name">
+                                          </div>
+                                          <div class="inside">
+                                            <label for="author-email">Email</label>
+                                            <input type="text" name="newcomment_author_email" size="50" value="" id="author-email">
+                                          </div>
+                                          <div class="inside">
+                                            <label for="author-url">URL</label>
+                                            <input type="text" id="author-url" name="newcomment_author_url" class="code" size="103" value="">
+                                          </div>
+                                        </div>
+                                        <div id="replysubmit" class="submit">
+                                          <p class="reply-submit-buttons">
+                                            <button type="button" class="save button button-primary">
+                                            <span id="addbtn" style="display: none;">Add Comment</span>
+                                            <span id="savebtn" style="display: none;">Update Comment</span>
+                                            <span id="replybtn" style="display: none;">Submit Reply</span>
+                                            </button>
+                                            <button type="button" class="cancel button">Cancel</button>
+                                            <span class="waiting spinner"></span>
+                                          </p>
+                                          <div class="notice notice-error notice-alt inline hidden">
+                                            <p class="error"></p>
+                                          </div>
+                                        </div>
+                                        <input type="hidden" name="action" id="action" value="">
+                                        <input type="hidden" name="comment_ID" id="comment_ID" value="">
+                                        <input type="hidden" name="comment_post_ID" id="comment_post_ID" value="">
+                                        <input type="hidden" name="status" id="status" value="">
+                                        <input type="hidden" name="position" id="position" value="-1">
+                                        <input type="hidden" name="checkbox" id="checkbox" value="0">
+                                        <input type="hidden" name="mode" id="mode" value="dashboard">
+                                        <input type="hidden" id="_ajax_nonce-replyto-comment" name="_ajax_nonce-replyto-comment" value="7e67454b16"><input type="hidden" id="_wp_unfiltered_html_comment" name="_wp_unfiltered_html_comment" value="27ee611f52">	
+                                      </fieldset>
+                                    </div>
+                                  </div>
+                                </form>
+                                <div class="hidden" id="trash-undo-holder">
+                                  <div class="trash-undo-inside">
+                                    Comment by <strong></strong> moved to the Trash.		<span class="undo untrash"><a href="#">Undo</a></span>
+                                  </div>
+                                </div>
+                                <div class="hidden" id="spam-undo-holder">
+                                  <div class="spam-undo-inside">
+                                    Comment by <strong></strong> marked as spam.		<span class="undo unspam"><a href="#">Undo</a></span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="postbox-container-2" class="postbox-container">
+                      <div id="side-sortables" class="meta-box-sortables ui-sortable">
+                        <div id="dashboard_quick_press" class="postbox ">
+                          <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text">Toggle panel: <span class="hide-if-no-js">Quick Draft</span> <span class="hide-if-js">Your Recent Drafts</span></span><span class="toggle-indicator" aria-hidden="true"></span></button>
+                          <h2 class="hndle ui-sortable-handle"><span><span class="hide-if-no-js">Quick Draft</span> <span class="hide-if-js">Your Recent Drafts</span></span></h2>
+                          <div class="inside">
+                            <form name="post" action="http://thepersonaldev.local/wp-admin/post.php" method="post" id="quick-press" class="initial-form hide-if-no-js">
+                              <div class="input-text-wrap" id="title-wrap">
+                                <label for="title">
+                                Title			</label>
+                                <input type="text" name="post_title" id="title" autocomplete="off">
+                              </div>
+                              <div class="textarea-wrap" id="description-wrap">
+                                <label for="content">Content</label>
+                                <textarea name="content" id="content" placeholder="What’s on your mind?" class="mceEditor" rows="3" cols="15" autocomplete="off"></textarea>
+                              </div>
+                              <p class="submit">
+                                <input type="hidden" name="action" id="quickpost-action" value="post-quickdraft-save">
+                                <input type="hidden" name="post_ID" value="307">
+                                <input type="hidden" name="post_type" value="post">
+                                <input type="hidden" id="_wpnonce" name="_wpnonce" value="df9a042aaa"><input type="hidden" name="_wp_http_referer" value="/wp-admin/index.php">			<input type="submit" name="save" id="save-post" class="button button-primary" value="Save Draft">			<br class="clear">
+                              </p>
+                            </form>
+                          </div>
+                        </div>
+                        <div id="dashboard_primary" class="postbox ">
+                          <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text">Toggle panel: WordPress Events and News</span><span class="toggle-indicator" aria-hidden="true"></span></button>
+                          <h2 class="hndle ui-sortable-handle"><span>WordPress Events and News</span></h2>
+                          <div class="inside">
+                            <div class="community-events-errors notice notice-error inline" aria-hidden="true">
+                              <p class="hide-if-js">
+                                This widget requires JavaScript.		
+                              </p>
+                              <p class="community-events-error-occurred" aria-hidden="true">
+                                An error occurred. Please try again.		
+                              </p>
+                              <p class="community-events-could-not-locate" aria-hidden="true"></p>
+                            </div>
+                            <div class="community-events-loading hide-if-no-js" aria-hidden="true">
+                              Loading…	
+                            </div>
+                            <div id="community-events" class="community-events" aria-hidden="false">
+                              <div class="activity-block">
+                                <p>
+                                  <span id="community-events-location-message" aria-hidden="false">Enter your closest city to find nearby events.</span>
+                                  <button class="button-link community-events-toggle-location" aria-label="Edit city" aria-expanded="true" aria-hidden="false">
+                                  <span class="dashicons dashicons-edit"></span>
+                                  </button>
+                                </p>
+                                <form class="community-events-form" aria-hidden="false" action="http://thepersonaldev.local/wp-admin/admin-ajax.php" method="post">
+                                  <label for="community-events-location">
+                                  City:				</label>
+                                  <input id="community-events-location" class="regular-text" type="text" name="community-events-location" placeholder="Cincinnati">
+                                  <input type="submit" name="community-events-submit" id="community-events-submit" class="button" value="Submit">
+                                  <button class="community-events-cancel button-link" type="button" aria-expanded="true">
+                                  Cancel				</button>
+                                  <span class="spinner"></span>
+                                </form>
+                              </div>
+                              <ul class="community-events-results activity-block last" aria-hidden="true"></ul>
+                            </div>
+                            <div class="wordpress-news hide-if-no-js">
+                              <div class="rss-widget">
+                                <ul>
+                                  <li><a class="rsswidget" href="https://wordpress.org/news/2020/04/people-of-wordpress-mario-peshev/">People of WordPress: Mario Peshev</a></li>
+                                </ul>
+                              </div>
+                              <div class="rss-widget">
+                                <ul>
+                                  <li><a class="rsswidget" href="https://wptavern.com/wpblocktalk-videos-now-available-on-wordpress-tv?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=wpblocktalk-videos-now-available-on-wordpress-tv">WPTavern: WPBlockTalk Videos Now Available on WordPress.tv</a></li>
+                                  <li><a class="rsswidget" href="https://wptavern.com/on-digital-gardens-blogs-personal-spaces-and-the-future?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=on-digital-gardens-blogs-personal-spaces-and-the-future">WPTavern: On Digital Gardens, Blogs, Personal Spaces, and the Future</a></li>
+                                  <li><a class="rsswidget" href="https://wptavern.com/leave-at-door-new-free-woocommerce-plugin-enables-contact-free-delivery?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=leave-at-door-new-free-woocommerce-plugin-enables-contact-free-delivery">WPTavern: Leave at Door: New Free WooCommerce Plugin Enables Contact-free Delivery</a></li>
+                                </ul>
+                              </div>
+                            </div>
+                            <p class="community-events-footer">
+                              <a href="https://make.wordpress.org/community/meetups-landing-page" target="_blank">Meetups <span class="screen-reader-text">(opens in a new tab)</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>
+                              |
+                              <a href="https://central.wordcamp.org/schedule/" target="_blank">WordCamps <span class="screen-reader-text">(opens in a new tab)</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>
+                              |
+                              <a href="https://wordpress.org/news/" target="_blank">News <span class="screen-reader-text">(opens in a new tab)</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a>	
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="postbox-container-3" class="postbox-container">
+                      <div id="column3-sortables" class="meta-box-sortables ui-sortable empty-container" data-emptystring="Drag boxes here"></div>
+                    </div>
+                    <div id="postbox-container-4" class="postbox-container">
+                      <div id="column4-sortables" class="meta-box-sortables ui-sortable empty-container" data-emptystring="Drag boxes here"></div>
+                    </div>
+                  </div>
+                  <input type="hidden" id="closedpostboxesnonce" name="closedpostboxesnonce" value="b33656eb77"><input type="hidden" id="meta-box-order-nonce" name="meta-box-order-nonce" value="57f3f42254">	
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <!-- built files will be auto injected -->
   </body>
 </html>
