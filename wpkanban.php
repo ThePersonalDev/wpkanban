@@ -61,7 +61,5 @@ add_action('admin_enqueue_scripts', function () {
  * Inject Vue Kanban app
  */
 add_action('admin_notices', function () { ?>
-  <div class="notice" style="margin: 0; margin-top: 10px; padding: 0; border: none; height: 0; background: none">
-    <div id="app"></div>
-  </div>
+  <div id="wpkanban" class="notice"></div>
 <?php });

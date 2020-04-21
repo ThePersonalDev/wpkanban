@@ -1,0 +1,29 @@
+.wpkanban-container {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.wpkanban-list-column {
+  width: 300px;
+  border: 1px solid $color-border;
+  padding: 10px;
+  margin-right: 20px;
+  background: $bg-1;
+
+  h3 {
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  section {
+    margin-top: 10px;
+  }
+}
+
+.wpkanban-card-mini {
+  background: $bg-1;
+  padding: 10px;
+  border: 1px solid $color-border;
+  margin-top: 10px;
+  font-weight: bold;
+}

@@ -1,0 +1,9 @@
+body {
+  .smooth-dnd-container.horizontal {
+    display: block;
+    padding-bottom: 20px;
+  }
+  .smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
+    display: inline-block;
+  }
+}
