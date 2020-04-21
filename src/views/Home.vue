@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    Container.wpkanban-container(orientation='horizontal')
+    Container.wpkanban-container(orientation='horizontal' @drop='onColumnDrop')
       Draggable.wpkanban-list-column(v-for='(list, key) in lists' :key='key')
         h3 {{list.title}}
       
@@ -27,7 +27,31 @@ export default {
         title: 'Done'
       }
     ]
-  })
+  }),
+
+  methods: {
+    onColumnDrop ($event) {
+      this.lists = this.applyDrop(this.lists, $event)
+    },
+
+    applyDrop (set, dragResult) {
+      const {removedIndex, addedIndex, payload} = dragResult
+      if (removedIndex === null && addedIndex === null) return set
+
+      const result = [...set]
+      let itemToAdd = payload
+
+      if (removedIndex !== null) {
+        itemToAdd = result.splice(removedIndex, 1)[0]
+      }
+
+      if (addedIndex !== null) {
+        result.splice(addedIndex, 0, itemToAdd)
+      }
+
+      return result
+    }
+  }
 }
 </script>
 
