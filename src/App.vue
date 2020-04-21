@@ -13,11 +13,9 @@
 
 <script>
 export default {
-  data: () => {
-    return {
-      isPoseboxOpen: true
-    }
-  },
+  data: () => ({
+    isPoseboxOpen: true
+  }),
   
   methods: {
     togglePostbox () {
