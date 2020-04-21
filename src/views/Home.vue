@@ -1,9 +1,9 @@
 <template lang="pug">
   div
     Container.wpkanban-container(orientation='horizontal' @drop='onColumnDrop')
-      Draggable.wpkanban-list-column(v-for='list in board' :key='list.id')
+      Draggable.wpkanban-list-column(v-for='list in board.lists' :key='list.id')
         h3 {{list.title}}
-        Container(group-name='col' @drop='(e) => onCardDrop(list.id, e)')
+        Container(group-name='col' @drop='(e) => onCardDrop(list.id, e)' :get-child-payload='getCardPayload(list.id)')
           Draggable.wpkanban-card-mini(v-for='(card, key) in list.cards' :key='key')
             div {{card.title}}
       .clear
@@ -18,44 +18,57 @@ export default {
   components: {Container, Draggable},
   
   data: () => ({
-    board: [
-      {
-        title: 'Todo',
-        id: 0,
-        cards: [{title: 'Test A'}, {title: 'Test B'}, {title: 'Test C'}]
-      },
-      {
-        title: 'Doing',
-        id: 1,
-        cards: [{title: 'Test D'}, {title: 'Test E'}, {title: 'Test F'}]
-      },
-      {
-        title: 'Done',
-        id: 2,
-        cards: [{title: 'Test G'}, {title: 'Test H'}, {title: 'Test I'}]
-      }
-    ]
+    board: {
+      lists: [
+        {
+          title: 'Todo',
+          id: 0,
+          cards: [{title: 'Card A'}, {title: 'Card B'}, {title: 'Card C'}]
+        },
+        {
+          title: 'Doing',
+          id: 1,
+          cards: [{title: 'Card D'}, {title: 'Card E'}, {title: 'Card F'}]
+        },
+        {
+          title: 'Done',
+          id: 2,
+          cards: [{title: 'Card G'}, {title: 'Card H'}, {title: 'Card I'}]
+        }
+      ]
+    }
   }),
 
   methods: {
-    onColumnDrop ($event) {
-      this.board = this.applyDrag(this.board, $event)
+    /**
+     * Drop a column into a new position
+     */
+    onColumnDrop (dropResult) {
+      const board = Object.assign({}, this.board)
+      board.lists = this.applyDrag(board.lists, dropResult)
+      this.board = board
     },
 
+    /**
+     * Drop a card into a new spot
+     */
     onCardDrop (listId, dropResult) {
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-        const board = this.board.slice()
-        const list = board.filter(list => list.id === listId)[0]
-        const listIdx = board.indexOf(list)
-        const newList = Object.assign({}, list)
+        const board = Object.assign({}, this.board)
+        const list = board.lists.filter(list => list.id === listId)[0]
+        const listIdx = board.lists.indexOf(list)
 
+        const newList = Object.assign({}, list)
         newList.cards = this.applyDrag(newList.cards, dropResult)
-        board.splice(listIdx, 1, newList)
+        board.lists.splice(listIdx, 1, newList)
 
         this.board = board
       }
     },
 
+    /**
+     * Update the vue state
+     */
     applyDrag (set, dragResult) {
       const {removedIndex, addedIndex, payload} = dragResult
       if (removedIndex === null && addedIndex === null) return set
@@ -72,6 +85,12 @@ export default {
       }
 
       return result
+    },
+
+    getCardPayload (listId) {
+      return index => {
+        return this.board.lists.filter(list => list.id === listId)[0].cards[index]
+      }
     }
   }
 }
@@ -97,6 +116,10 @@ $bg-1: #fff;
     font-size: 1rem;
     margin: 0;
   }
+  
+  section {
+    margin-top: 10px;
+  }
 }
 
 .smooth-dnd-container.horizontal {
@@ -108,7 +131,10 @@ $bg-1: #fff;
 }
 
 .wpkanban-card-mini {
+  background: $bg-1;
   padding: 10px;
   border: 1px solid $color-border;
+  margin-top: 10px;
+  font-weight: bold;
 }
 </style>
