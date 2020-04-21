@@ -60,6 +60,8 @@ add_action('admin_enqueue_scripts', function () {
 /**
  * Inject Vue Kanban app
  */
-add_action('admin_notices', function () { ?>
-  <div id="wpkanban" class="notice"></div>
-<?php });
+add_action('load-index.php', function () {
+  add_action('admin_notices', function () { ?>
+    <div id="wpkanban" class="notice"></div>
+  <?php });
+});
