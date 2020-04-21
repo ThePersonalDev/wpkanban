@@ -44,3 +44,24 @@ add_action('init', function () {
     'taxonomies' => ['wpkanban_board', 'wpkanban_list']
   ]);
 });
+
+/**
+ * Enqueue scripts
+ */
+add_action('admin_enqueue_scripts', function () {
+  $plugin_data = get_plugin_data(__FILE__);
+
+  wp_enqueue_style('wpkanban', plugin_dir_url(__FILE__) . '/dist/css/app.css', [], $plugin_data['Version']);
+
+  wp_enqueue_script('wpkanban-vue-vendor', plugin_dir_url(__FILE__) . '/dist/js/chunk-vendors.js', [], $plugin_data['Version'], true);
+  wp_enqueue_script('wpkanban-vue', plugin_dir_url(__FILE__) . '/dist/js/app.js', [], $plugin_data['Version'], true);
+});
+
+/**
+ * Inject Vue Kanban app
+ */
+add_action('admin_notices', function () { ?>
+  <div class="notice" style="margin: 0; margin-top: 10px; padding: 0; border: none; height: 0; background: none">
+    <div id="app"></div>
+  </div>
+<?php });
