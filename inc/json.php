@@ -17,7 +17,32 @@ function wpkanban_generate_board_json () {
       'order' => 'ASC',
       'meta_key' => 'order',
       'meta_compare' => 'NUMERIC'
-    ]);  
+    ]);
+
+    foreach ($lists as $key => $list) {
+      $lists[$key]->cards = [];
+
+      $cards = get_posts([
+        'post_type' => 'wpkanban',
+        'numberposts' => -1,
+        'tax_query' => [
+          [
+            'taxonomy' => 'wpkanban_board',
+            'field' => 'term_id',
+            'terms' => $list->term_id
+          ]
+        ]
+      ]);
+
+      if (count($cards)) {
+        foreach($cards as $card) {
+          array_push($lists[$key]->cards, [
+            'title' => $card->post_title,
+            'id' => $card->ID
+          ]);
+        }
+      }
+    }
   }
   
   echo '<script>window.WPKanban = {lists: ' . json_encode($lists) . '}</script>';
