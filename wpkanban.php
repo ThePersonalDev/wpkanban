@@ -11,23 +11,23 @@
 define('WPKANBAN_PLUGIN_FILE', __FILE__);
 require plugin_dir_path(__FILE__) . '/inc/cpt/kanban.php'; 
 require plugin_dir_path(__FILE__) . '/inc/activation.php';
-
-/**
- * Enqueue scripts
- */
-add_action('admin_enqueue_scripts', function () {
-  $plugin_data = get_plugin_data(__FILE__);
-
-  wp_enqueue_style('wpkanban', plugin_dir_url(__FILE__) . '/dist/css/app.css', [], $plugin_data['Version']);
-
-  wp_enqueue_script('wpkanban-vue-vendor', plugin_dir_url(__FILE__) . '/dist/js/chunk-vendors.js', [], $plugin_data['Version'], true);
-  wp_enqueue_script('wpkanban-vue', plugin_dir_url(__FILE__) . '/dist/js/app.js', [], $plugin_data['Version'], true);
-});
+require plugin_dir_path(__FILE__) . '/inc/json.php';
 
 /**
  * Inject Vue Kanban app
  */
 add_action('load-index.php', function () {
+  add_action('admin_enqueue_scripts', function () {
+    $plugin_data = get_plugin_data(__FILE__);
+
+    wp_enqueue_style('wpkanban', plugin_dir_url(__FILE__) . '/dist/css/app.css', [], $plugin_data['Version']);
+
+    wp_enqueue_script('wpkanban-vue-vendor', plugin_dir_url(__FILE__) . '/dist/js/chunk-vendors.js', [], $plugin_data['Version'], true);
+    wp_enqueue_script('wpkanban-vue', plugin_dir_url(__FILE__) . '/dist/js/app.js', [], $plugin_data['Version'], true);
+
+    wpkanban_generate_board_json();
+  });
+
   add_action('admin_notices', function () { ?>
     <div id="wpkanban" class="notice"></div>
   <?php });

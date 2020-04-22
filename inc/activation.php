@@ -24,7 +24,8 @@ add_action('admin_notices', function () {
  * Create default kanban board if one doesn't exist
  */
 function wpkanban_maybe_create_default_board () {
-  $boards = get_terms('wpkanban_board', [
+  $boards = get_terms([
+    'taxonomy' => 'wpkanban_board',
     'hide_empty' => false
   ]);
 
@@ -41,21 +42,21 @@ function wpkanban_maybe_create_default_board () {
     ]);
     update_term_meta($list['term_id'], 'order', 0);
     
-    wp_insert_term('Todo', 'wpkanban_board', [
+    $list = wp_insert_term('Todo', 'wpkanban_board', [
       'slug' => 'default-todo',
       'description' => 'For cards that haven\'t been started yet',
       'parent' => $board['term_id']
     ]);
     update_term_meta($list['term_id'], 'order', 1);
 
-    wp_insert_term('Doing', 'wpkanban_board', [
+    $list = wp_insert_term('Doing', 'wpkanban_board', [
       'slug' => 'default-doing',
       'description' => 'For cards that are actively being worked on',
       'parent' => $board['term_id']
     ]);
     update_term_meta($list['term_id'], 'order', 2);
 
-    wp_insert_term('Done', 'wpkanban_board', [
+    $list = wp_insert_term('Done', 'wpkanban_board', [
       'slug' => 'default-done',
       'description' => 'For completed cards',
       'parent' => $board['term_id']
