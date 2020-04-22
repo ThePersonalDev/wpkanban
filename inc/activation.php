@@ -35,36 +35,53 @@ function wpkanban_maybe_create_default_board () {
       'description' => 'Your default WP Kanban board'
     ]);
 
-    $list = wp_insert_term('Backlog', 'wpkanban_board', [
+    $backlog = wp_insert_term('Backlog', 'wpkanban_board', [
       'slug' => 'default-backlog',
       'description' => 'For cards that are still being considered',
       'parent' => $board['term_id']
     ]);
-    update_term_meta($list['term_id'], 'order', 0);
+    update_term_meta($backlog['term_id'], 'order', 0);
+
+    // Create default posts
+    wpkanban_create_card($backlog['term_id'], ['title' => 'Card A']);
+    wpkanban_create_card($backlog['term_id'], ['title' => 'Card B']);
+    wpkanban_create_card($backlog['term_id'], ['title' => 'Card C']);
     
-    $list = wp_insert_term('Todo', 'wpkanban_board', [
+    $todo = wp_insert_term('Todo', 'wpkanban_board', [
       'slug' => 'default-todo',
       'description' => 'For cards that haven\'t been started yet',
       'parent' => $board['term_id']
     ]);
-    update_term_meta($list['term_id'], 'order', 1);
+    update_term_meta($todo['term_id'], 'order', 1);
 
-    $list = wp_insert_term('Doing', 'wpkanban_board', [
+    $doing = wp_insert_term('Doing', 'wpkanban_board', [
       'slug' => 'default-doing',
       'description' => 'For cards that are actively being worked on',
       'parent' => $board['term_id']
     ]);
-    update_term_meta($list['term_id'], 'order', 2);
+    update_term_meta($doing['term_id'], 'order', 2);
 
-    $list = wp_insert_term('Done', 'wpkanban_board', [
+    $done = wp_insert_term('Done', 'wpkanban_board', [
       'slug' => 'default-done',
       'description' => 'For completed cards',
       'parent' => $board['term_id']
     ]);
-    update_term_meta($list['term_id'], 'order', 3);
+    update_term_meta($done['term_id'], 'order', 3);
 
     echo '<div class="updated notice is-dismissible"><p>WP Kanban: Created default board</p></div>';
   }
+}
+
+/**
+ * Add cards to a term
+ */
+function wpkanban_create_card ($term_id, $args) {
+  wp_insert_post([
+    'post_title' => $args['title'],
+    'post_type' => 'wpkanban',
+    'post_status' => 'publish',
+    'tax_input' => ['wpkanban_board' => [$term_id]]
+  ]);
 }
 
 // add_action('admin_notices', function () {
