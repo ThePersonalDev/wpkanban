@@ -10,18 +10,10 @@ function wpkanban_register_cpt () {
       'singular_name' => 'Board'
     ],
     'public' => true,
+    'hierarchical' => true,
     'rewrite' => ['slug' => 'wpkanban-board']
   ]);
 
-  register_taxonomy('wpkanban_list', 'wpkanban', [
-    'labels' => [
-      'name' => 'Lists',
-      'singular_name' => 'List'
-    ],
-    'public' => true,
-    'rewrite' => ['slug' => 'wpkanban-list']
-  ]);
-  
   register_post_type('wpkanban', [
     'labels' => [
       'name' => 'WP Kanban'
