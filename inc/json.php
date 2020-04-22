@@ -45,5 +45,9 @@ function wpkanban_generate_board_json () {
     }
   }
   
-  echo '<script>window.WPKanban = {lists: ' . json_encode($lists) . '}</script>';
+  wp_localize_script('wpkanban-vue', 'WPKanban', [
+    'lists' => $lists,
+    'ajaxurl' => admin_url('admin-ajax.php'),
+    'nonce' => wp_create_nonce('wpkanban')
+  ]);
 }

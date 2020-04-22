@@ -31,6 +31,7 @@ export default {
       board.lists = this.applyDrag(board.lists, dropResult)
 
       this.$store.commit('set', ['board', board])
+      this.board.ajaxurl && this.persistColumnOrder()
     },
 
     /**
@@ -75,6 +76,24 @@ export default {
       return index => {
         return this.board.lists.filter(list => list.term_id === listId)[0].cards[index]
       }
+    },
+
+    /**
+     * Sends message to WordPress to persist column order
+     */
+    persistColumnOrder () {
+      let data = []
+      
+      this.board.lists.forEach((list, idx) => {
+        data.push(list.term_id)
+      })
+
+      this.axios.post(this.board.ajaxurl, {
+        nonce: this.board.nonce,
+        action: 'persist_list_order'
+      }).then((response) => {
+        console.log('RESPONSE', response)
+      })
     }
   }
 }
