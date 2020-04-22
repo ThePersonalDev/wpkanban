@@ -20,5 +20,5 @@ function wpkanban_generate_board_json () {
     ]);  
   }
   
-  echo '<script>console.log(' . json_encode($lists) . ')</script>';
+  echo '<script>window.WPKanban = {lists: ' . json_encode($lists) . '}</script>';
 }

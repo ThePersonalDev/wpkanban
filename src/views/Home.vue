@@ -1,9 +1,9 @@
 <template lang="pug">
   div
     Container.wpkanban-container(orientation='horizontal' @drop='onColumnDrop')
-      Draggable.wpkanban-list-column(v-for='list in board.lists' :key='list.id')
-        h3 {{list.title}}
-        Container(group-name='col' @drop='(e) => onCardDrop(list.id, e)' :get-child-payload='getCardPayload(list.id)')
+      Draggable.wpkanban-list-column(v-for='list in board.lists' :key='list.term_id')
+        h3 {{list.name}}
+        Container(group-name='col' @drop='(e) => onCardDrop(list.term_id, e)' :get-child-payload='getCardPayload(list.term_id)')
           Draggable.wpkanban-card-mini(v-for='(card, key) in list.cards' :key='key')
             div {{card.title}}
       .clear
@@ -11,33 +11,16 @@
 
 <script>
 import {Container, Draggable} from 'vue-smooth-dnd'
+import {mapState} from 'vuex'
 
 export default {
   name: 'Home',
 
   components: {Container, Draggable},
   
-  data: () => ({
-    board: {
-      lists: [
-        {
-          title: 'Todo',
-          id: 0,
-          cards: [{title: 'Card A'}, {title: 'Card B'}, {title: 'Card C'}]
-        },
-        {
-          title: 'Doing',
-          id: 1,
-          cards: [{title: 'Card D'}, {title: 'Card E'}, {title: 'Card F'}]
-        },
-        {
-          title: 'Done',
-          id: 2,
-          cards: [{title: 'Card G'}, {title: 'Card H'}, {title: 'Card I'}]
-        }
-      ]
-    }
-  }),
+  computed: {
+    ...mapState(['board'])
+  },
 
   methods: {
     /**
@@ -46,7 +29,8 @@ export default {
     onColumnDrop (dropResult) {
       const board = Object.assign({}, this.board)
       board.lists = this.applyDrag(board.lists, dropResult)
-      this.board = board
+
+      this.$store.commit('set', ['board', board])
     },
 
     /**
@@ -55,14 +39,14 @@ export default {
     onCardDrop (listId, dropResult) {
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
         const board = Object.assign({}, this.board)
-        const list = board.lists.filter(list => list.id === listId)[0]
+        const list = board.lists.filter(list => list.term_id === listId)[0]
         const listIdx = board.lists.indexOf(list)
 
         const newList = Object.assign({}, list)
         newList.cards = this.applyDrag(newList.cards, dropResult)
         board.lists.splice(listIdx, 1, newList)
 
-        this.board = board
+        this.$store.commit('set', ['board', board])
       }
     },
 
@@ -89,7 +73,7 @@ export default {
 
     getCardPayload (listId) {
       return index => {
-        return this.board.lists.filter(list => list.id === listId)[0].cards[index]
+        return this.board.lists.filter(list => list.term_id === listId)[0].cards[index]
       }
     }
   }

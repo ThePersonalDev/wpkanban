@@ -12,10 +12,20 @@
 </template>
 
 <script>
+import board from './store/mock'
+
 export default {
   data: () => ({
     isPoseboxOpen: true
   }),
+
+  mounted () {
+    if (window.WPKanban) {
+      this.$store.commit('set', ['board', window.WPKanban])
+    } else {
+      this.$store.commit('set', ['board', board])
+    }
+  },
   
   methods: {
     togglePostbox () {
