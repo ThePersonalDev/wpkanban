@@ -34,3 +34,17 @@ add_action('wp_ajax_wpkanban_persist_card_order', function () {
   
   wp_die();
 });
+
+/**
+ * Updates list title
+ */
+add_action('wp_ajax_wpkanban_update_list_title', function () {
+  check_ajax_referer('wpkanban');
+
+  wp_update_term($_POST['listId'], 'wpkanban_board', [
+    'name' => $_POST['title'],
+    'slug' => sanitize_title($_POST['title'])
+  ]);
+
+  wp_die();
+});
