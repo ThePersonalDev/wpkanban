@@ -1,6 +1,6 @@
 <template lang="pug">
-  h3
-    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onTitleBlur') {{list.name}}
+  div
+    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress') {{card.title}}
 </template>
 
 <script>
@@ -8,9 +8,9 @@ import {debounce} from 'lodash'
 import {mapState} from 'vuex'
 
 export default {
-  name: 'ColumnTitle',
+  name: 'CardTitle',
   
-  props: ['list', 'listIdx'],
+  props: ['card', 'cardIdx'],
 
   computed: {
     ...mapState(['board'])
@@ -31,33 +31,23 @@ export default {
      */
     onTitleChange: debounce(function (ev) {
       if (!this.board.ajaxurl) return
-      
+
       const title = ev.target.innerText
       let data = new FormData()
 
       data.append('action', 'wpkanban_update_list_title')
       data.append('_ajax_nonce', this.board.nonce)
       data.append('title', title)
-      data.append('listId', this.list.term_id)
+      data.append('cardId', this.card.id)
 
-      this.axios.post(this.board.ajaxurl, data)
-    }, 500, {trailing: true}),
-
-    /**
-     * Persist title internally
-     */
-    onTitleBlur (ev) {
-      let board = Object.assign({}, this.board)
-      board.lists[this.listIdx].name = ev.target.innerText
-
-      this.$store.commit('set', ['board', board])
-    }
+      // this.axios.post(this.board.ajaxurl, data)
+    }, 500, {trailing: true})
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  h3 {
+  div {
     display: block;
 
     span {

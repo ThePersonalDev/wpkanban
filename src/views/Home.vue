@@ -1,23 +1,24 @@
 <template lang="pug">
   div
     Container.wpkanban-container(orientation='horizontal' @drop='onColumnDrop')
-      Draggable.wpkanban-list-column(v-for='(list, listIdx) in board.lists' :key='list.term_id')
+      Draggable.wpkanban-list-column(v-for='(list, listIdx) in board.lists' :key='listIdx')
         ColumnTitle(:list='list' :listIdx='listIdx')
         Container(group-name='col' @drop='(e) => onCardDrop(list.term_id, e)' :get-child-payload='getCardPayload(list.term_id)')
-          Draggable.wpkanban-card-mini(v-for='(card, key) in list.cards' :key='key')
-            div {{card.title}}
+          Draggable.wpkanban-card-mini(v-for='(card, cardIdx) in list.cards' :key='cardIdx')
+            CardTitle(:card='card' :cardIdx='cardIdx')
       .clear
 </template>
 
 <script>
 import {Container, Draggable} from 'vue-smooth-dnd'
 import ColumnTitle from '@/components/ColumnTitle'
+import CardTitle from '@/components/CardTitle'
 import {mapState} from 'vuex'
 
 export default {
   name: 'Home',
 
-  components: {Container, Draggable, ColumnTitle},
+  components: {Container, Draggable, ColumnTitle, CardTitle},
   
   computed: {
     ...mapState(['board'])
