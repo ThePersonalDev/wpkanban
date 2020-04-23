@@ -48,3 +48,18 @@ add_action('wp_ajax_wpkanban_update_list_title', function () {
 
   wp_die();
 });
+
+/**
+ * Updates a card title
+ */
+add_action('wp_ajax_wpkanban_update_card_title', function () {
+  check_ajax_referer('wpkanban');
+
+  wp_update_post([
+    'ID' => $_POST['cardId'],
+    'post_title' => $_POST['title'],
+    'post_name' => sanitize_title($_POST['title'])
+  ]);
+
+  wp_die();
+});

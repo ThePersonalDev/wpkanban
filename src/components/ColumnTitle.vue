@@ -1,6 +1,6 @@
 <template lang="pug">
   h3
-    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onTitleBlur') {{list.name}}
+    span(ref='title' contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onTitleBlur') {{list.name}}
 </template>
 
 <script>
@@ -46,9 +46,9 @@ export default {
     /**
      * Persist title internally
      */
-    onTitleBlur (ev) {
+    onTitleBlur () {
       let board = Object.assign({}, this.board)
-      board.lists[this.listIdx].name = ev.target.innerText
+      board.lists[this.listIdx].name = this.$refs.title.innerText
 
       this.$store.commit('set', ['board', board])
     }

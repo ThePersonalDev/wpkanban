@@ -5,7 +5,7 @@
         ColumnTitle(:list='list' :listIdx='listIdx')
         Container(group-name='col' @drop='(e) => onCardDrop(list.term_id, e)' :get-child-payload='getCardPayload(list.term_id)')
           Draggable.wpkanban-card-mini(v-for='(card, cardIdx) in list.cards' :key='cardIdx')
-            CardTitle(:card='card' :cardIdx='cardIdx')
+            CardTitle(:card='card' :cardIdx='cardIdx' :listIdx='listIdx')
       .clear
 </template>
 

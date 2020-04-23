@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress') {{card.title}}
+    span(ref='title' contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onTitleBlur') {{card.title}}
 </template>
 
 <script>
@@ -10,7 +10,7 @@ import {mapState} from 'vuex'
 export default {
   name: 'CardTitle',
   
-  props: ['card', 'cardIdx'],
+  props: ['card', 'cardIdx', 'listIdx'],
 
   computed: {
     ...mapState(['board'])
@@ -35,13 +35,23 @@ export default {
       const title = ev.target.innerText
       let data = new FormData()
 
-      data.append('action', 'wpkanban_update_list_title')
+      data.append('action', 'wpkanban_update_card_title')
       data.append('_ajax_nonce', this.board.nonce)
       data.append('title', title)
       data.append('cardId', this.card.id)
 
-      // this.axios.post(this.board.ajaxurl, data)
-    }, 500, {trailing: true})
+      this.axios.post(this.board.ajaxurl, data)
+    }, 500, {trailing: true}),
+
+    /**
+     * Persist title internally
+     */
+    onTitleBlur () {
+      let board = Object.assign({}, this.board)
+      board.lists[this.listIdx].cards[this.cardIdx].title = this.$refs.title.innerText
+
+      this.$store.commit('set', ['board', board])
+    }
   }
 }
 </script>
