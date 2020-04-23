@@ -14,6 +14,7 @@ import {Container, Draggable} from 'vue-smooth-dnd'
 import ColumnTitle from '@/components/ColumnTitle'
 import CardTitle from '@/components/CardTitle'
 import {mapState} from 'vuex'
+import {cloneDeep} from 'lodash'
 
 export default {
   name: 'Home',
@@ -29,7 +30,7 @@ export default {
      * Drop a column into a new position
      */
     onColumnDrop (dropResult) {
-      const board = Object.assign({}, this.board)
+      const board = cloneDeep(this.board)
       board.lists = this.applyDrag(board.lists, dropResult)
 
       this.$store.commit('set', ['board', board])
@@ -41,11 +42,11 @@ export default {
      */
     onCardDrop (listId, dropResult) {
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
-        const board = Object.assign({}, this.board)
+        const board = cloneDeep(this.board)
         const list = board.lists.filter(list => list.term_id === listId)[0]
         const listIdx = board.lists.indexOf(list)
 
-        const newList = Object.assign({}, list)
+        const newList = cloneDeep(list)
         newList.cards = this.applyDrag(newList.cards, dropResult)
         board.lists.splice(listIdx, 1, newList)
 

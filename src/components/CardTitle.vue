@@ -1,10 +1,10 @@
 <template lang="pug">
   div
-    span(ref='title' contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onTitleBlur') {{card.title}}
+    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onTitleBlur') {{card.title}}
 </template>
 
 <script>
-import {debounce} from 'lodash'
+import {debounce, cloneDeep} from 'lodash'
 import {mapState} from 'vuex'
 
 export default {
@@ -14,6 +14,14 @@ export default {
 
   computed: {
     ...mapState(['board'])
+  },
+
+  data: () => ({
+    title: ''
+  }),
+
+  mounted () {
+    this.title = this.card.title
   },
 
   methods: {
@@ -29,27 +37,35 @@ export default {
     /**
      * Update the title
      */
-    onTitleChange: debounce(function (ev) {
-      if (!this.board.ajaxurl) return
+    onTitleChange (ev) {
+      this.title = ev.target.innerText
 
-      const title = ev.target.innerText
+      if (this.board.ajaxurl) {
+        this.persistTitle()
+      }
+    },
+
+    /**
+     * Persist title to server
+     */
+    persistTitle: debounce(function () {
       let data = new FormData()
 
       data.append('action', 'wpkanban_update_card_title')
       data.append('_ajax_nonce', this.board.nonce)
-      data.append('title', title)
+      data.append('title', this.title)
       data.append('cardId', this.card.id)
 
       this.axios.post(this.board.ajaxurl, data)
-    }, 500, {trailing: true}),
+    }, 250, {trailing: true}),
 
     /**
      * Persist title internally
      */
     onTitleBlur () {
-      let board = Object.assign({}, this.board)
-      board.lists[this.listIdx].cards[this.cardIdx].title = this.$refs.title.innerText
+      let board = cloneDeep(this.board)
 
+      board.lists[this.listIdx].cards[this.cardIdx].title = this.title
       this.$store.commit('set', ['board', board])
     }
   }
