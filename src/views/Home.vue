@@ -6,6 +6,7 @@
         Container(group-name='col' @drop='(e) => onCardDrop(list.term_id, e)' :get-child-payload='getCardPayload(list.term_id)')
           Draggable.wpkanban-card-mini(v-for='(card, cardIdx) in list.cards' :key='cardIdx')
             CardTitle(:card='card' :cardIdx='cardIdx' :listIdx='listIdx')
+        button.button.wpkanban-add-new-list-button(@click='addNewCard(listIdx)') New card
       .clear
 </template>
 
@@ -115,6 +116,19 @@ export default {
       data.append('listId', this.board.lists[listIdx].term_id)
 
       this.axios.post(this.board.ajaxurl, data)
+    },
+
+    /**
+     * Adds a new card
+     */
+    addNewCard (listIdx) {
+      const board = cloneDeep(this.board)
+      board.lists[listIdx].cards.push({
+        title: '',
+        id: -1
+      })
+
+      this.$store.commit('set', ['board', board])
     }
   }
 }

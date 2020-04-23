@@ -16,7 +16,7 @@
   }
   
   section {
-    margin-top: 10px;
+    margin-top: $list-item-spacer;
   }
 }
 
@@ -26,4 +26,9 @@
   border: 1px solid $color-border;
   margin-top: 10px;
   font-weight: bold;
+}
+
+.button.wpkanban-add-new-list-button {
+  margin-top: $list-item-spacer;
+  display: block;
 }
