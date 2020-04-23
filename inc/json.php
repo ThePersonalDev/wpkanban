@@ -25,6 +25,8 @@ function wpkanban_generate_board_json () {
       $cards = get_posts([
         'post_type' => 'wpkanban',
         'numberposts' => -1,
+        'orderby' => 'menu_order',
+        'order' => 'ASC',
         'tax_query' => [
           [
             'taxonomy' => 'wpkanban_board',

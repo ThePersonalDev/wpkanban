@@ -89,7 +89,7 @@ export default {
       this.board.lists.forEach(list => {
         order.push(list.term_id)
       })
-      data.append('action', 'persist_list_order')
+      data.append('action', 'wpkanban_persist_list_order')
       data.append('_ajax_nonce', this.board.nonce)
       data.append('order', JSON.stringify(order))
 
@@ -106,7 +106,7 @@ export default {
       this.board.lists[listIdx].cards.forEach(card => {
         order.push(card.id)
       })
-      data.append('action', 'persist_card_order')
+      data.append('action', 'wpkanban_persist_card_order')
       data.append('_ajax_nonce', this.board.nonce)
       data.append('order', JSON.stringify(order))
       data.append('listId', this.board.lists[listIdx].term_id)

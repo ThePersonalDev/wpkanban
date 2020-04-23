@@ -3,15 +3,12 @@
 /**
  * Updates column order
  */
-add_action('wp_ajax_persist_list_order', function () {
+add_action('wp_ajax_wpkanban_persist_list_order', function () {
   check_ajax_referer('wpkanban');
 
   $lists = json_decode($_POST['order']);
-
-  $data = [];
-  foreach ($lists as $key=>$listId) {
-    array_push($data, $list);
-    update_term_meta($listId, 'order', $key);
+  foreach ($lists as $order => $listId) {
+    update_term_meta($listId, 'order', $order);
   }
   
   wp_die();
@@ -20,7 +17,20 @@ add_action('wp_ajax_persist_list_order', function () {
 /**
  * Persist card order
  */
-add_action('wp_ajax_persist_card_order', function () {
+add_action('wp_ajax_wpkanban_persist_card_order', function () {
   check_ajax_referer('wpkanban');
+
+  $cards = json_decode($_POST['order']);
+
+  foreach ($cards as $order => $cardId) {
+    wp_delete_object_term_relationships($cardId, 'wpkanban_board');
+    
+    wp_update_post([
+      'ID' => $cardId,
+      'menu_order' => $order,
+      'tax_input' => ['wpkanban_board' => $_POST['listId']]
+    ]);
+  }
+  
   wp_die();
 });

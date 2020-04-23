@@ -43,9 +43,9 @@ function wpkanban_maybe_create_default_board () {
     update_term_meta($backlog['term_id'], 'order', 0);
 
     // Create default posts
-    wpkanban_create_card($backlog['term_id'], ['title' => 'Card A']);
-    wpkanban_create_card($backlog['term_id'], ['title' => 'Card B']);
-    wpkanban_create_card($backlog['term_id'], ['title' => 'Card C']);
+    wpkanban_create_card($backlog['term_id'], ['title' => 'Card A', 'menu_order' => 0]);
+    wpkanban_create_card($backlog['term_id'], ['title' => 'Card B', 'menu_order' => 1]);
+    wpkanban_create_card($backlog['term_id'], ['title' => 'Card C', 'menu_order' => 2]);
     
     $todo = wp_insert_term('Todo', 'wpkanban_board', [
       'slug' => 'default-todo',
@@ -80,6 +80,7 @@ function wpkanban_create_card ($term_id, $args) {
     'post_title' => $args['title'],
     'post_type' => 'wpkanban',
     'post_status' => 'publish',
+    'menu_order' => $args['menu_order'],
     'tax_input' => ['wpkanban_board' => [$term_id]]
   ]);
 }
