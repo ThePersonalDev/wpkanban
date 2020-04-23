@@ -83,7 +83,3 @@ function wpkanban_create_card ($term_id, $args) {
     'tax_input' => ['wpkanban_board' => [$term_id]]
   ]);
 }
-
-// add_action('admin_notices', function () {
-//   wpkanban_maybe_create_default_board();
-// });

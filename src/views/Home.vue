@@ -82,18 +82,17 @@ export default {
      * Sends message to WordPress to persist column order
      */
     persistColumnOrder () {
-      let data = []
+      let data = new FormData()
+      let order = []
       
       this.board.lists.forEach((list, idx) => {
-        data.push(list.term_id)
+        order.push(list.term_id)
       })
+      data.append('action', 'persist_list_order')
+      data.append('_ajax_nonce', this.board.nonce)
+      data.append('order', JSON.stringify(order))
 
-      this.axios.post(this.board.ajaxurl, {
-        nonce: this.board.nonce,
-        action: 'persist_list_order'
-      }).then((response) => {
-        console.log('RESPONSE', response)
-      })
+      this.axios.post(this.board.ajaxurl, data)
     }
   }
 }

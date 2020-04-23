@@ -12,6 +12,7 @@ define('WPKANBAN_PLUGIN_FILE', __FILE__);
 require plugin_dir_path(__FILE__) . '/inc/cpt/kanban.php'; 
 require plugin_dir_path(__FILE__) . '/inc/activation.php';
 require plugin_dir_path(__FILE__) . '/inc/json.php';
+require plugin_dir_path(__FILE__) . '/inc/ajax.php';
 
 /**
  * Inject Vue Kanban app
