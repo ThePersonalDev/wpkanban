@@ -1,6 +1,6 @@
 <template lang="pug">
   h3
-    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onTitleBlur') {{list.name}}
+    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{list.name}}
 </template>
 
 <script>
@@ -19,6 +19,12 @@ export default {
   data: () => ({
     title: ''
   }),
+
+  watch: {
+    list (list) {
+      this.title = list.name
+    }
+  },
 
   mounted () {
     this.title = this.list.name
@@ -59,10 +65,9 @@ export default {
     /**
      * Persist title internally
      */
-    onTitleBlur () {
+    onBlur () {      
       let board = cloneDeep(this.board)
       board.lists[this.listIdx].name = this.title
-
       this.$store.commit('set', ['board', board])
     }
   }

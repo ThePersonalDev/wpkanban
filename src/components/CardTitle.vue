@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onTitleBlur') {{card.title}}
+    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
 </template>
 
 <script>
@@ -16,8 +16,14 @@ export default {
     ...mapState(['board'])
   },
 
+  watch: {
+    card (card) {
+      this.title = card.title
+    }
+  },
+
   data: () => ({
-    title: ''
+    title: '',
   }),
 
   mounted () {
@@ -59,12 +65,8 @@ export default {
       this.axios.post(this.board.ajaxurl, data)
     }, 250, {trailing: true}),
 
-    /**
-     * Persist title internally
-     */
-    onTitleBlur () {
-      let board = cloneDeep(this.board)
-
+    onBlur() {
+      const board = cloneDeep(this.board)
       board.lists[this.listIdx].cards[this.cardIdx].title = this.title
       this.$store.commit('set', ['board', board])
     }
