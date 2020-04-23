@@ -16,3 +16,11 @@ add_action('wp_ajax_persist_list_order', function () {
   
   wp_die();
 });
+
+/**
+ * Persist card order
+ */
+add_action('wp_ajax_persist_card_order', function () {
+  check_ajax_referer('wpkanban');
+  wp_die();
+});

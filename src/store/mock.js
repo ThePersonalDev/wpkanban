@@ -11,7 +11,7 @@ export default {
       "parent": 20,
       "count": 0,
       "filter": "raw",
-      cards: [{title: 'Card A'}, {title: 'Card B'}, {title: 'Card C'}]
+      cards: [{title: 'Card A', id: 0}, {title: 'Card B', id: 1}, {title: 'Card C', id: 2}]
     },
     {
       "term_id": 22,
@@ -24,7 +24,7 @@ export default {
       "parent": 20,
       "count": 0,
       "filter": "raw",
-      cards: [{title: 'Card D'}, {title: 'Card E'}, {title: 'Card F'}]
+      cards: [{title: 'Card D', id: 3}, {title: 'Card E', id: 4}, {title: 'Card F', id: 5}]
     },
     {
       "term_id": 23,
@@ -37,7 +37,7 @@ export default {
       "parent": 20,
       "count": 0,
       "filter": "raw",
-      cards: [{title: 'Card G'}, {title: 'Card H'}, {title: 'Card I'}]
+      cards: [{title: 'Card G', id: 6}, {title: 'Card H', id: 7}, {title: 'Card I', id: 8}]
     },
     {
       "term_id": 24,

@@ -48,6 +48,7 @@ export default {
         board.lists.splice(listIdx, 1, newList)
 
         this.$store.commit('set', ['board', board])
+        this.board.ajaxurl && this.persistCardOrder(listIdx)
       }
     },
 
@@ -85,12 +86,30 @@ export default {
       let data = new FormData()
       let order = []
       
-      this.board.lists.forEach((list, idx) => {
+      this.board.lists.forEach(list => {
         order.push(list.term_id)
       })
       data.append('action', 'persist_list_order')
       data.append('_ajax_nonce', this.board.nonce)
       data.append('order', JSON.stringify(order))
+
+      this.axios.post(this.board.ajaxurl, data)
+    },
+
+    /**
+     * Sends message to WordPress to persist card order
+     */
+    persistCardOrder (listIdx) {
+      let data = new FormData()
+      let order = []
+
+      this.board.lists[listIdx].cards.forEach(card => {
+        order.push(card.id)
+      })
+      data.append('action', 'persist_card_order')
+      data.append('_ajax_nonce', this.board.nonce)
+      data.append('order', JSON.stringify(order))
+      data.append('listId', this.board.lists[listIdx].term_id)
 
       this.axios.post(this.board.ajaxurl, data)
     }
