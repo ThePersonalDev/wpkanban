@@ -69,9 +69,7 @@ export default {
       const board = cloneDeep(this.board)
       board.lists[this.listIdx].cards[this.cardIdx].title = this.title
       this.$store.commit('set', ['board', board])
-
-      // Fix for newly created cards (otherwise the text is duplicated)
-      this.$refs.title.innerText = this.title
+      this.card.title = this.title
     }
   }
 }
