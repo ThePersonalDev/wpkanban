@@ -72,6 +72,9 @@ export default {
       this.axios.post(this.board.ajaxurl, data)
     }, 250, {trailing: true}),
 
+    /**
+     * Persist title locally
+     */
     onBlur() {
       const board = cloneDeep(this.board)
       board.lists[this.listIdx].cards[this.cardIdx].title = this.title

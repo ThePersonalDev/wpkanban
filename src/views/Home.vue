@@ -89,6 +89,22 @@ export default {
     },
 
     /**
+     * Adds a new card
+     */
+    addNewCard (listIdx) {
+      const board = cloneDeep(this.board)
+      board.lists[listIdx].cards.push({
+        title: ' ',
+        id: -1
+      })
+
+      this.addedNewCard = true
+      this.$store.commit('set', ['board', board])
+
+      this.board.ajaxurl && this.persistNewCard(listIdx)
+    },
+
+    /**
      * Sends message to WordPress to persist column order
      */
     persistColumnOrder () {
@@ -124,17 +140,21 @@ export default {
     },
 
     /**
-     * Adds a new card
+     * Creates a new card on the server
      */
-    addNewCard (listIdx) {
-      const board = cloneDeep(this.board)
-      board.lists[listIdx].cards.push({
-        title: ' ',
-        id: 99
-      })
+    persistNewCard (listIdx) {
+      let data = new FormData()
+      let lastCardIdx = this.board.lists[listIdx].cards.length - 1
 
-      this.addedNewCard = true
-      this.$store.commit('set', ['board', board])
+      data.append('action', 'wpkanban_persist_new_card')
+      data.append('_ajax_nonce', this.board.nonce)
+      data.append('listId', this.board.lists[listIdx].term_id)
+      data.append('order', lastCardIdx)
+
+      this.axios.post(this.board.ajaxurl, data)
+        .then(response => {
+          this.board.lists[listIdx].cards[lastCardIdx].id = response.data.id
+        })
     }
   }
 }

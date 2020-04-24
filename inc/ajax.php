@@ -63,3 +63,17 @@ add_action('wp_ajax_wpkanban_update_card_title', function () {
 
   wp_die();
 });
+
+/**
+ * Creates a new card in WordPress and returns its ID to the frontend
+ */
+add_action('wp_ajax_wpkanban_persist_new_card', function () {
+  check_ajax_referer('wpkanban');
+  
+  $id = wpkanban_create_card($_POST['listId'], [
+    'title' => '',
+    'menu_order' => $_POST['order']
+  ]);
+  
+  wp_send_json(['id' => $id]);
+});
