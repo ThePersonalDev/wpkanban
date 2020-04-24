@@ -1,0 +1,51 @@
+.wpkanban-card-title {
+  display: flex;
+  align-items: center;
+
+  span {
+    display: block;
+    min-width: 100px;
+    min-height: 1rem;
+    padding: 4px 6px;
+    width: 100%;
+  }
+
+  &:hover .wpkanban-card-title-icon-button {
+    opacity: 0.5;
+  }
+
+  .wpkanban-card-title-icon-button {
+    padding: 4px 6px;
+    padding-top: 6px;
+    fill: $text-1;
+    margin-left: 10px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+
+    &:hover {
+      opacity: 1;
+      border: 1px solid lighten($color-border, 0%);
+      box-shadow: 0px 0px 3px rgba(0,0,0,0.15);
+    }
+  }
+
+  svg {
+    height: 1rem;
+  }
+
+  .wpkanban-card-title-wrap {
+    flex-grow: 1;
+    overflow: hidden;
+  }
+}
+
+.wpkanban-card-mini {
+  background: $bg-1;
+  padding: 4px;
+  border: 1px solid $color-border;
+  margin-top: 10px;
+  font-weight: bold;
+}

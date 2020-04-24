@@ -1,6 +1,10 @@
 <template lang="pug">
-  div
-    span(ref='title' contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
+  div.wpkanban-card-title
+    div.wpkanban-card-title-wrap
+      span(ref='title' contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
+    div.wpkanban-card-title-icon-button
+      svg(viewBox='0 0 512 512')
+        path(d='M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z')
 </template>
 
 <script>
@@ -84,17 +88,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  div {
-    display: block;
-
-    span {
-      display: inline-block;
-      min-width: 100px;
-      min-height: 1rem;
-      max-width: 100%;
-      white-space: break;
-    }
-  }
-</style>
