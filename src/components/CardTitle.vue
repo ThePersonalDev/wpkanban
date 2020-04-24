@@ -5,7 +5,7 @@
   .wpkanban-card-title-icon-button(@click='openDropdown' :class='{"wpkanban-invisible": isDropdownOpen}')
     svg(viewBox='0 0 512 512')
       path(d='M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z')
-  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename')
+  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename' v-on:remove='onDelete')
 </template>
 
 <script>
@@ -118,6 +118,18 @@ export default {
         this.$refs.title.focus()
         document.execCommand('selectAll', false, null)
       }, 0)
+    },
+
+    /**
+     * Delete the card
+     */
+    onDelete () {
+      const board = cloneDeep(this.board)
+
+      board.lists[this.listIdx].cards.splice(this.cardIdx, 1)
+      this.$store.commit('set', ['board', board])
+      
+      this.isDropdownOpen = false
     }
   }
 }
