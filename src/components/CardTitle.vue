@@ -19,6 +19,7 @@ export default {
   watch: {
     card (card) {
       this.title = card.title
+      this.$refs.title.innerText = this.title
     }
   },
 
@@ -31,6 +32,7 @@ export default {
 
     if (this.addedNewCard) {
       this.$refs.title.focus()
+      this.$emit('newCardMounted')
     }
   },
 
