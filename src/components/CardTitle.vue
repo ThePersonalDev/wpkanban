@@ -10,7 +10,7 @@ import {mapState} from 'vuex'
 export default {
   name: 'CardTitle',
   
-  props: ['card', 'cardIdx', 'listIdx'],
+  props: ['card', 'cardIdx', 'listIdx', 'addedNewCard'],
 
   computed: {
     ...mapState(['board'])
@@ -28,6 +28,10 @@ export default {
 
   mounted () {
     this.title = this.card.title
+
+    if (this.addedNewCard) {
+      this.$refs.title.focus()
+    }
   },
 
   methods: {
@@ -36,6 +40,7 @@ export default {
      */
     onTitleKeypress (ev) {
       if (ev.key === 'Enter') {
+        this.$refs.title.blur()
         ev.preventDefault()
       }
     },

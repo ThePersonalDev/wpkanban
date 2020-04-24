@@ -5,7 +5,7 @@
         ListTitle(:list='list' :listIdx='listIdx')
         Container(group-name='col' @drop='(e) => onCardDrop(list.term_id, e)' :get-child-payload='getCardPayload(list.term_id)')
           Draggable.wpkanban-card-mini(v-for='(card, cardIdx) in list.cards' :key='cardIdx')
-            CardTitle(:card='card' :cardIdx='cardIdx' :listIdx='listIdx')
+            CardTitle(:card='card' :cardIdx='cardIdx' :listIdx='listIdx' :addedNewCard='addedNewCard' v-on:newCardMounted='addedNewCard = false')
         button.button.wpkanban-add-new-list-button(@click='addNewCard(listIdx)') New card
       .clear
 </template>
@@ -25,6 +25,11 @@ export default {
   computed: {
     ...mapState(['board'])
   },
+
+  data: () => ({
+    // True after a card is added, and turned false after it's mounted method is run
+    addedNewCard: false
+  }),
 
   methods: {
     /**
@@ -124,10 +129,11 @@ export default {
     addNewCard (listIdx) {
       const board = cloneDeep(this.board)
       board.lists[listIdx].cards.push({
-        title: '',
-        id: -1
+        title: ' ',
+        id: 99
       })
 
+      this.addedNewCard = true
       this.$store.commit('set', ['board', board])
     }
   }
