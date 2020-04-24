@@ -1,11 +1,11 @@
 <template lang="pug">
 .wpkanban-card-title
   .wpkanban-card-title-wrap
-    span(ref='title' contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
+    span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
   .wpkanban-card-title-icon-button(@click='openDropdown' :class='{"wpkanban-invisible": isDropdownOpen}')
     svg(viewBox='0 0 512 512')
       path(d='M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z')
-  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false')
+  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename')
 </template>
 
 <script>
@@ -33,6 +33,7 @@ export default {
 
   data: () => ({
     title: '',
+    isEditable: false,
     isDropdownOpen: false
   }),
 
@@ -40,8 +41,12 @@ export default {
     this.title = this.card.title
 
     if (this.addedNewCard) {
-      this.$refs.title.focus()
-      this.$emit('newCardMounted')
+      this.isEditable = true
+
+      setTimeout(() => {
+        this.$refs.title.focus()
+        this.$emit('newCardMounted')
+      })
     }
   },
 
@@ -90,6 +95,7 @@ export default {
       this.$store.commit('set', ['board', board])
       this.card.title = this.title
       this.isDropdownOpen = false
+      this.isEditable = false
     },
 
     /**
@@ -98,6 +104,19 @@ export default {
     openDropdown () {
       setTimeout(() => {
         this.isDropdownOpen = true
+      }, 0)
+    },
+
+    /**
+     * Makes card editable, focuses it, and selects all
+     */
+    onRename () {
+      this.isDropdownOpen = false
+      this.isEditable = true
+
+      setTimeout(() => {
+        this.$refs.title.focus()
+        document.execCommand('selectAll', false, null)
       }, 0)
     }
   }
