@@ -1,6 +1,7 @@
 .wpkanban-card-title {
   display: flex;
   align-items: center;
+  position: relative;
 
   span {
     display: block;
@@ -25,6 +26,10 @@
     opacity: 0;
     transition: opacity 0.35s ease;
 
+    &.wpkanban-invisible {
+      visibility: hidden;
+    }
+
     &:hover {
       opacity: 1;
       border: 1px solid lighten($color-border, 0%);
@@ -48,4 +53,31 @@
   border: 1px solid $color-border;
   margin-top: 10px;
   font-weight: bold;
+}
+
+.wpkanban-card-dropdown {
+  background: $bg-1;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  border: 1px solid $color-border;
+  min-width: 100px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.15);
+  margin: 0;
+  display: none;
+  z-index: 1;
+
+  li {
+    margin-bottom: 0;
+    cursor: pointer;
+
+    padding: 10px;
+    &:hover {
+      background: darken($bg-1, 10%);
+    }
+  }
+
+  &.wpkanban-visible {
+    display: block;
+  }
 }

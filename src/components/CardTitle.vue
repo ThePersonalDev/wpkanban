@@ -1,20 +1,29 @@
 <template lang="pug">
-  div.wpkanban-card-title
-    div.wpkanban-card-title-wrap
+  .wpkanban-card-title
+    .wpkanban-card-title-wrap
       span(ref='title' contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
-    div.wpkanban-card-title-icon-button
+    .wpkanban-card-title-icon-button(@click='openDropdown' :class='{"wpkanban-invisible": isDropdownOpen}')
       svg(viewBox='0 0 512 512')
         path(d='M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z')
+    ul.wpkanban-card-dropdown(:class='{"wpkanban-visible": isDropdownOpen}' v-click-outside='onDropdownOutsideClick')
+      li Test 1
+      li Test 2
+      li Test 3
 </template>
 
 <script>
 import {debounce, cloneDeep} from 'lodash'
 import {mapState} from 'vuex'
+import vClickOutside from 'v-click-outside'
 
 export default {
   name: 'CardTitle',
   
   props: ['card', 'cardIdx', 'listIdx', 'addedNewCard'],
+
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
 
   computed: {
     ...mapState(['board'])
@@ -29,6 +38,7 @@ export default {
 
   data: () => ({
     title: '',
+    isDropdownOpen: false
   }),
 
   mounted () {
@@ -84,6 +94,23 @@ export default {
       board.lists[this.listIdx].cards[this.cardIdx].title = this.title
       this.$store.commit('set', ['board', board])
       this.card.title = this.title
+      this.isDropdownOpen = false
+    },
+
+    /**
+     * Opens the dropdown, waiting a frame so that click-outside isn't triggered
+     */
+    openDropdown () {
+      setTimeout(() => {
+        this.isDropdownOpen = true
+      }, 0)
+    },
+
+    /**
+     * Called when user clicks outside the dropdown
+     */
+    onDropdownOutsideClick () {
+      this.isDropdownOpen = false
     }
   }
 }

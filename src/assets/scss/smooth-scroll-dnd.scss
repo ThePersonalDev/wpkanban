@@ -3,7 +3,12 @@ body {
     display: block;
     padding-bottom: 20px;
   }
+  
   .smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
     display: inline-block;
+  }
+
+  .smooth-dnd-container.vertical > .smooth-dnd-draggable-wrapper {
+    overflow: visible;
   }
 }
