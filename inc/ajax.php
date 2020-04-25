@@ -77,3 +77,14 @@ add_action('wp_ajax_wpkanban_persist_new_card', function () {
   
   wp_send_json(['id' => $id]);
 });
+
+/**
+ * Deletes the psot
+ */
+add_action('wp_ajax_wpkanban_persist_card_delete', function () {
+  check_ajax_referer('wpkanban');
+
+  wp_delete_post($_POST['id'], true);
+  
+  wp_die();
+});

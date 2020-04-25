@@ -125,11 +125,25 @@ export default {
      */
     onDelete () {
       const board = cloneDeep(this.board)
+      const card = board.lists[this.listIdx].cards.splice(this.cardIdx, 1)[0]
 
-      board.lists[this.listIdx].cards.splice(this.cardIdx, 1)
       this.$store.commit('set', ['board', board])
-      
       this.isDropdownOpen = false
+
+      this.board.ajaxurl && this.persistCardDeletion(card)
+    },
+
+    /**
+     * Delete the card on WordPress
+     */
+    persistCardDeletion (card) {
+      let data = new FormData()
+
+      data.append('action', 'wpkanban_persist_card_delete')
+      data.append('_ajax_nonce', this.board.nonce)
+      data.append('id', card.id)
+      
+      this.axios.post(this.board.ajaxurl, data)
     }
   }
 }
