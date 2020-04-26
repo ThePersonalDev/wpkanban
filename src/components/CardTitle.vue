@@ -1,6 +1,6 @@
 <template lang="pug">
 .wpkanban-card-title
-  .wpkanban-card-title-wrap
+  .wpkanban-card-title-wrap(@click='onClick')
     span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
   .wpkanban-card-title-icon-button(@click='openDropdown' :class='{"wpkanban-invisible": isDropdownOpen}')
     svg(viewBox='0 0 512 512')
@@ -87,9 +87,18 @@ export default {
     }, 250, {trailing: true}),
 
     /**
+     * Navigate to edit page
+     */
+    onClick () {
+      if (!this.isEditable && this.card.editURL) {
+        window.location = this.card.editURL
+      }
+    },
+
+    /**
      * Persist title locally
      */
-    onBlur() {
+    onBlur () {
       const board = cloneDeep(this.board)
       board.lists[this.listIdx].cards[this.cardIdx].title = this.title
       this.$store.commit('set', ['board', board])
@@ -101,10 +110,11 @@ export default {
     /**
      * Opens the dropdown, waiting a frame so that click-outside isn't triggered
      */
-    openDropdown () {
+    openDropdown (ev) {
       setTimeout(() => {
         this.isDropdownOpen = true
       }, 0)
+      ev.preventDefault()
     },
 
     /**

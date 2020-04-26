@@ -40,7 +40,8 @@ function wpkanban_generate_board_json () {
         foreach($cards as $card) {
           array_push($lists[$key]->cards, [
             'title' => $card->post_title,
-            'id' => $card->ID
+            'id' => $card->ID,
+            'editURL' => get_edit_post_link($card->ID, '')
           ]);
         }
       }
