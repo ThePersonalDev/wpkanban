@@ -25,6 +25,8 @@ export default {
     } else {
       this.$store.commit('set', ['board', board])
     }
+
+    window.WPKanbanApp = this
   },
   
   methods: {

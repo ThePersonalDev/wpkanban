@@ -1,8 +1,8 @@
 <template lang="pug">
-.wpkanban-card-title
-  .wpkanban-card-title-wrap(@click='onClick')
-    span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
-  .wpkanban-card-title-icon-button(@click='openDropdown' :class='{"wpkanban-invisible": isDropdownOpen}')
+h3.wpkanban-card-title
+  .wpkanban-card-title-wrap
+    span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{list.name}}
+  .wpkanban-card-title-icon-button(@click='openDropdown')
     DropdownIcon
   CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename' v-on:remove='onDelete')
 </template>
@@ -10,44 +10,34 @@
 <script>
 import {debounce, cloneDeep} from 'lodash'
 import {mapState} from 'vuex'
-import CardDropdown from './CardDropdown'
 import DropdownIcon from './DropdownIcon'
+import CardDropdown from './CardDropdown'
 
 export default {
-  name: 'CardTitle',
+  name: 'ColumnTitle',
+
+  components: {DropdownIcon, CardDropdown},
   
-  components: {CardDropdown, DropdownIcon},
-  
-  props: ['card', 'cardIdx', 'listIdx', 'addedNewCard'],
+  props: ['list', 'listIdx'],
 
   computed: {
     ...mapState(['board'])
   },
 
+  data: () => ({
+    title: '',
+    isDropdownOpen: false,
+    isEditable: false
+  }),
+
   watch: {
-    card (card) {
-      this.title = card.title
-      this.$refs.title.innerText = this.title
+    list (list) {
+      this.title = list.name
     }
   },
 
-  data: () => ({
-    title: '',
-    isEditable: false,
-    isDropdownOpen: false
-  }),
-
   mounted () {
-    this.title = this.card.title
-
-    if (this.addedNewCard) {
-      this.isEditable = true
-
-      setTimeout(() => {
-        this.$refs.title.focus()
-        this.$emit('newCardMounted')
-      })
-    }
+    this.title = this.list.name
   },
 
   methods: {
@@ -60,7 +50,7 @@ export default {
         ev.preventDefault()
       }
     },
-    
+
     /**
      * Update the title
      */
@@ -71,38 +61,28 @@ export default {
         this.persistTitle()
       }
     },
-
+    
     /**
-     * Persist title to server
+     * Persist title on server
      */
-    persistTitle: debounce(function () {
+    persistTitle: debounce(function (ev) {      
       let data = new FormData()
 
-      data.append('action', 'wpkanban_update_card_title')
+      data.append('action', 'wpkanban_update_list_title')
       data.append('_ajax_nonce', this.board.nonce)
       data.append('title', this.title)
-      data.append('cardId', this.card.id)
+      data.append('listId', this.list.term_id)
 
       this.axios.post(this.board.ajaxurl, data)
-    }, 250, {trailing: true}),
+    }, 500, {trailing: true}),
 
     /**
-     * Navigate to edit page
+     * Persist title internally
      */
-    onClick () {
-      if (!this.isEditable && this.card.editURL) {
-        window.location = this.card.editURL
-      }
-    },
-
-    /**
-     * Persist title locally
-     */
-    onBlur () {
-      const board = cloneDeep(this.board)
-      board.lists[this.listIdx].cards[this.cardIdx].title = this.title
+    onBlur () {      
+      let board = cloneDeep(this.board)
+      board.lists[this.listIdx].name = this.title
       this.$store.commit('set', ['board', board])
-      this.card.title = this.title
       this.isDropdownOpen = false
       this.isEditable = false
     },
@@ -118,7 +98,7 @@ export default {
     },
 
     /**
-     * Makes card editable, focuses it, and selects all
+     * Rename the column
      */
     onRename () {
       this.isDropdownOpen = false
@@ -131,29 +111,31 @@ export default {
     },
 
     /**
-     * Delete the card
+     * Delete columns
      */
     onDelete () {
       const board = cloneDeep(this.board)
-      const card = board.lists[this.listIdx].cards.splice(this.cardIdx, 1)[0]
+      const list = board.lists.splice(this.listIdx, 1)
 
       this.$store.commit('set', ['board', board])
       this.isDropdownOpen = false
 
-      this.board.ajaxurl && this.persistCardDeletion(card)
+      this.board.ajaxurl && this.persistListDeletion(list)
     },
 
     /**
-     * Delete the card on WordPress
+     * Delete the list on WordPress, including all of its cards
      */
-    persistCardDeletion (card) {
+    persistListDeletion (list) {
       let data = new FormData()
 
       data.append('action', 'wpkanban_persist_card_delete')
       data.append('_ajax_nonce', this.board.nonce)
-      data.append('id', card.id)
+      data.append('id', list.term_id)
       
-      this.axios.post(this.board.ajaxurl, data)
+      this.axios.post(this.board.ajaxurl, data).then(response => {
+        console.log('response', response)
+      })
     }
   }
 }
