@@ -4,7 +4,7 @@ h3.wpkanban-card-title
     span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{list.name}}
   .wpkanban-card-title-icon-button(@click='openDropdown')
     DropdownIcon
-  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename')
+  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename' v-on:remove='onDelete')
 </template>
 
 <script>
@@ -108,6 +108,34 @@ export default {
         this.$refs.title.focus()
         document.execCommand('selectAll', false, null)
       }, 0)
+    },
+
+    /**
+     * Delete columns
+     */
+    onDelete () {
+      const board = cloneDeep(this.board)
+      const list = board.lists.splice(this.listIdx, 1)
+
+      this.$store.commit('set', ['board', board])
+      this.isDropdownOpen = false
+
+      this.board.ajaxurl && this.persistListDeletion(list)
+    },
+
+    /**
+     * Delete the list on WordPress, including all of its cards
+     */
+    persistListDeletion (list) {
+      let data = new FormData()
+
+      data.append('action', 'wpkanban_persist_card_delete')
+      data.append('_ajax_nonce', this.board.nonce)
+      data.append('id', list.term_id)
+      
+      this.axios.post(this.board.ajaxurl, data).then(response => {
+        console.log('response', response)
+      })
     }
   }
 }
