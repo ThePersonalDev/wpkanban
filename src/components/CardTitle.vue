@@ -3,8 +3,7 @@
   .wpkanban-card-title-wrap(@click='onClick')
     span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
   .wpkanban-card-title-icon-button(@click='openDropdown' :class='{"wpkanban-invisible": isDropdownOpen}')
-    svg(viewBox='0 0 512 512')
-      path(d='M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z')
+    DropdownIcon
   CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename' v-on:remove='onDelete')
 </template>
 
@@ -12,11 +11,12 @@
 import {debounce, cloneDeep} from 'lodash'
 import {mapState} from 'vuex'
 import CardDropdown from './CardDropdown'
+import DropdownIcon from './DropdownIcon'
 
 export default {
   name: 'CardTitle',
   
-  components: {CardDropdown},
+  components: {CardDropdown, DropdownIcon},
   
   props: ['card', 'cardIdx', 'listIdx', 'addedNewCard'],
 

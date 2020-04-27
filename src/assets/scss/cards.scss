@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  box-sizing: border-box;
 
   span {
     display: block;
@@ -9,6 +10,7 @@
     min-height: 1rem;
     padding: 4px 6px;
     width: 100%;
+    box-sizing: border-box;
   }
 
   &:hover .wpkanban-card-title-icon-button {

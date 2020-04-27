@@ -1,14 +1,22 @@
 <template lang="pug">
-  h3
+h3.wpkanban-card-title
+  .wpkanban-card-title-wrap
     span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{list.name}}
+  .wpkanban-card-title-icon-button(@click='openDropdown')
+    DropdownIcon
+  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false')
 </template>
 
 <script>
 import {debounce, cloneDeep} from 'lodash'
 import {mapState} from 'vuex'
+import DropdownIcon from './DropdownIcon'
+import CardDropdown from './CardDropdown'
 
 export default {
   name: 'ColumnTitle',
+
+  components: {DropdownIcon, CardDropdown},
   
   props: ['list', 'listIdx'],
 
@@ -17,7 +25,8 @@ export default {
   },
 
   data: () => ({
-    title: ''
+    title: '',
+    isDropdownOpen: false
   }),
 
   watch: {
@@ -69,21 +78,17 @@ export default {
       let board = cloneDeep(this.board)
       board.lists[this.listIdx].name = this.title
       this.$store.commit('set', ['board', board])
+    },
+
+    /**
+     * Opens the dropdown, waiting a frame so that click-outside isn't triggered
+     */
+    openDropdown (ev) {
+      setTimeout(() => {
+        this.isDropdownOpen = true
+      }, 0)
+      ev.preventDefault()
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  h3 {
-    display: block;
-
-    span {
-      display: inline-block;
-      min-width: 100px;
-      min-height: 1rem;
-      max-width: 100%;
-      white-space: break;
-    }
-  }
-</style>
