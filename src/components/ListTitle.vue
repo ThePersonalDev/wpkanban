@@ -1,10 +1,10 @@
 <template lang="pug">
 h3.wpkanban-card-title
   .wpkanban-card-title-wrap
-    span(contenteditable @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{list.name}}
+    span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{list.name}}
   .wpkanban-card-title-icon-button(@click='openDropdown')
     DropdownIcon
-  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false')
+  CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename')
 </template>
 
 <script>
@@ -26,7 +26,8 @@ export default {
 
   data: () => ({
     title: '',
-    isDropdownOpen: false
+    isDropdownOpen: false,
+    isEditable: false
   }),
 
   watch: {
@@ -45,10 +46,14 @@ export default {
      */
     onTitleKeypress (ev) {
       if (ev.key === 'Enter') {
+        this.$refs.title.blur()
         ev.preventDefault()
       }
     },
 
+    /**
+     * Update the title
+     */
     onTitleChange (ev) {
       this.title = ev.target.innerText
 
@@ -78,6 +83,8 @@ export default {
       let board = cloneDeep(this.board)
       board.lists[this.listIdx].name = this.title
       this.$store.commit('set', ['board', board])
+      this.isDropdownOpen = false
+      this.isEditable = false
     },
 
     /**
@@ -88,6 +95,19 @@ export default {
         this.isDropdownOpen = true
       }, 0)
       ev.preventDefault()
+    },
+
+    /**
+     * Rename the column
+     */
+    onRename () {
+      this.isDropdownOpen = false
+      this.isEditable = true
+
+      setTimeout(() => {
+        this.$refs.title.focus()
+        document.execCommand('selectAll', false, null)
+      }, 0)
     }
   }
 }
