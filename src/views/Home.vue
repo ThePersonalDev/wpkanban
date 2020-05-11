@@ -154,6 +154,7 @@ export default {
       this.axios.post(this.board.ajaxurl, data)
         .then(response => {
           this.board.lists[listIdx].cards[lastCardIdx].id = response.data.id
+          this.board.lists[listIdx].cards[lastCardIdx].editURL = response.data.editURL
         })
     }
   }

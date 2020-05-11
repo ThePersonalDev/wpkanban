@@ -75,7 +75,10 @@ add_action('wp_ajax_wpkanban_persist_new_card', function () {
     'menu_order' => $_POST['order']
   ]);
   
-  wp_send_json(['id' => $id]);
+  wp_send_json([
+    'id' => $id,
+    'editURL' => get_edit_post_link($id, '')
+  ]);
 });
 
 /**
