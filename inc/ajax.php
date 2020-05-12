@@ -91,3 +91,17 @@ add_action('wp_ajax_wpkanban_persist_card_delete', function () {
   
   wp_die();
 });
+
+/**
+ * Persist metabox open state
+ */
+add_action('wp_ajax_wpkanban_persist_dashboard_metabox_open_state', function () {
+  check_ajax_referer('wpkanban');
+
+  update_option('wpkanban_is_dashboard_metabox_closed', $_POST['isClosed']);
+  
+  wp_send_json([
+    'isClosed' => $_POST['isClosed']
+  ]);
+  wp_die();
+});

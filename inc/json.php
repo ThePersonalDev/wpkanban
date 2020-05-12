@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Generates Board data
+ * - List of cards
+ * - Board meta data
+ */
 function wpkanban_generate_board_json () {
   $board = get_terms([
     'taxonomy' => 'wpkanban_board',
@@ -19,6 +24,7 @@ function wpkanban_generate_board_json () {
       'meta_compare' => 'NUMERIC'
     ]);
 
+    // Get card data
     foreach ($lists as $key => $list) {
       $lists[$key]->cards = [];
 
@@ -47,8 +53,13 @@ function wpkanban_generate_board_json () {
       }
     }
   }
-  
+
+  // Board metadata
+  $isDashboardMetaboxClosed = get_option('wpkanban_is_dashboard_metabox_closed', false);
+ 
+  // Include script
   wp_localize_script('wpkanban-vue', 'WPKanban', [
+    'isDashboardMetaboxClosed' => $isDashboardMetaboxClosed == 'true' ? true : false,
     'lists' => $lists,
     'ajaxurl' => admin_url('admin-ajax.php'),
     'nonce' => wp_create_nonce('wpkanban')

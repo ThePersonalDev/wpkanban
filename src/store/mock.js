@@ -1,4 +1,6 @@
 export default {
+  isDashboardMetaboxClosed: false,
+  
   lists: [
     {
       "term_id": 21,
