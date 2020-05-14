@@ -3,7 +3,7 @@
     label(for='wpkanban-board-selector' style='margin-right: 10px;')
       strong Board:
     select#wpkanban-board-selector
-      option - Choose board -
+      option(v-for='opt in board.boards' :value='opt.id') {{opt.title}}
 </template>
 
 <script>

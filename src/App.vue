@@ -50,9 +50,7 @@ export default {
         data.append('_ajax_nonce', this.board.nonce)
         data.append('isClosed', this.board.isDashboardMetaboxClosed)
   
-        this.axios.post(this.board.ajaxurl, data).then(res => {
-          console.log(res.data)
-        })
+        this.axios.post(this.board.ajaxurl, data)
       }
     }
   }

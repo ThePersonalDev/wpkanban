@@ -2,7 +2,7 @@ export default {
   "boards": {
     "default": {
       "title": "Default",
-      "slug": "default"
+      "id": 30
     }
   },
   "isDashboardMetaboxClosed": "",

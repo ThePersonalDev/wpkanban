@@ -58,7 +58,7 @@ function wpkanban_generate_board_json () {
   foreach ($boardList as $board) {
     $boards[$board->slug] = [
       'title' => $board->name,
-      'slug' => $board->slug
+      'id' => $board->term_id
     ];
   }
 
