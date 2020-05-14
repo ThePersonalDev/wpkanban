@@ -112,5 +112,8 @@ add_action('wp_ajax_wpkanban_persist_dashboard_metabox_open_state', function () 
 add_action('wp_ajax_wpkanban_change_dashboard_board', function () {
   check_ajax_referer('wpkanban');
 
-  wp_send_json(wpkanban_generate_board_json($_POST['board']));
+  $board = wpkanban_generate_board_json($_POST['board']);
+  update_option('wpkanban_selected_dashboard_board', $_POST['board']);
+  
+  wp_send_json($board);
 });

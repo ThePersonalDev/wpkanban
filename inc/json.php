@@ -17,7 +17,7 @@ function wpkanban_generate_board_json ($boardIdToSelect = false) {
     if ($boardIdToSelect) {
       $selectedBoardId = $boardIdToSelect;
     } else {
-      $selectedBoardId = get_option('wpkanban_is_dashboard_board', $boardList[0]->term_id);
+      $selectedBoardId = get_option('wpkanban_selected_dashboard_board', $boardList[0]->term_id);
     }
     
     // Get lists for selected board

@@ -35,7 +35,7 @@ function wpkanban_maybe_create_default_board () {
       'slug' => 'default',
       'description' => 'Your default WP Kanban board'
     ]);
-    update_option('wpkanban_is_dashboard_board', $board->term_id);
+    update_option('wpkanban_selected_dashboard_board', $board->term_id);
 
     // Backlog list
     $backlog = wp_insert_term('Backlog', 'wpkanban_board', [
