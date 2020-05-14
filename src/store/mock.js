@@ -3,9 +3,13 @@ export default {
     "default": {
       "title": "Default",
       "id": 30
+    },
+    "ideas": {
+      "title": "Ideas",
+      "id": 42
     }
   },
-  "currentBoard": 30,
+  "currentBoard": "30",
   "isDashboardMetaboxClosed": "",
   "lists": [
     {

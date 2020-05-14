@@ -26,7 +26,7 @@ add_action('load-index.php', function () {
     wp_enqueue_script('wpkanban-vue-vendor', plugin_dir_url(__FILE__) . '/dist/js/chunk-vendors.js', [], $plugin_data['Version'], true);
     wp_enqueue_script('wpkanban-vue', plugin_dir_url(__FILE__) . '/dist/js/app.js', [], $plugin_data['Version'], true);
 
-    wpkanban_generate_board_json();
+    wp_localize_script('wpkanban-vue', 'WPKanban', wpkanban_generate_board_json());
   });
 
   add_action('admin_notices', function () { ?>

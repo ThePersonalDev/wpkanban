@@ -5,7 +5,7 @@
  * - List of cards
  * - Board meta data
  */
-function wpkanban_generate_board_json () {
+function wpkanban_generate_board_json ($boardIdToSelect = false) {
   $boardList = get_terms([
     'taxonomy' => 'wpkanban_board',
     'parent' => 0,
@@ -14,18 +14,32 @@ function wpkanban_generate_board_json () {
 
   if (count($boardList)) {
     // Get selected board
-    $currentBoard = get_option('wpkanban_is_dashboard_board', $boardList[0]);
+    if ($boardIdToSelect) {
+      $selectedBoardId = $boardIdToSelect;
+    } else {
+      $selectedBoardId = get_option('wpkanban_is_dashboard_board', $boardList[0]->term_id);
+    }
     
     // Get lists for selected board
     $lists = get_terms([
       'taxonomy' => 'wpkanban_board',
-      'parent' => $currentBoard->term_id,
+      'parent' => $selectedBoardId,
       'hide_empty' => false,
       'orderby' => 'meta_value_num',
       'order' => 'ASC',
       'meta_key' => 'order',
       'meta_compare' => 'NUMERIC'
     ]);
+
+    // If the list is empty, try again in case user manually created
+    // the lists (ie, "order" is null)
+    if (!count($lists)) {
+      $lists = get_terms([
+        'taxonomy' => 'wpkanban_board',
+        'parent' => $selectedBoardId,
+        'hide_empty' => false
+      ]);  
+    }
 
     // Get card data
     foreach ($lists as $key => $list) {
@@ -67,15 +81,14 @@ function wpkanban_generate_board_json () {
 
     // Board metadata
     $isDashboardMetaboxClosed = get_option('wpkanban_is_dashboard_metabox_closed', false);
-  
-    // Include script
-    wp_localize_script('wpkanban-vue', 'WPKanban', [
+
+    return [
       'boards' => $boards,
-      'currentBoard' => $currentBoard->term_id,
+      'currentBoard' => $selectedBoardId,
       'isDashboardMetaboxClosed' => $isDashboardMetaboxClosed == 'true' ? true : false,
       'lists' => $lists,
       'ajaxurl' => admin_url('admin-ajax.php'),
       'nonce' => wp_create_nonce('wpkanban')
-    ]);
+    ];
   }
 }

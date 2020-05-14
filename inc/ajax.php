@@ -105,3 +105,12 @@ add_action('wp_ajax_wpkanban_persist_dashboard_metabox_open_state', function () 
   ]);
   wp_die();
 });
+
+/**
+ * Change the board
+ */
+add_action('wp_ajax_wpkanban_change_dashboard_board', function () {
+  check_ajax_referer('wpkanban');
+
+  wp_send_json(wpkanban_generate_board_json($_POST['board']));
+});
