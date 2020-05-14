@@ -82,13 +82,16 @@ function wpkanban_maybe_create_default_board () {
  * Add cards to a term
  */
 function wpkanban_create_card ($term_id, $args) {
+  $term = get_term($term_id);
+
   $postId = wp_insert_post([
     'post_title' => $args['title'],
     'post_type' => 'wpkanban',
     'post_status' => 'publish',
     'menu_order' => $args['menu_order'],
-    'tax_input' => ['wpkanban_board' => [$term_id]]
+    'tax_input' => ['wpkanban_board' => [$term->parent, $term_id]]
   ]);
+
 
   return $postId;
 }
