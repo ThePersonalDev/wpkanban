@@ -5,6 +5,7 @@ export default {
       "id": 30
     }
   },
+  "currentBoard": 30,
   "isDashboardMetaboxClosed": "",
   "lists": [
     {
