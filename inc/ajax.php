@@ -75,7 +75,10 @@ add_action('wp_ajax_wpkanban_persist_new_card', function () {
     'menu_order' => $_POST['order']
   ]);
   
-  wp_send_json(['id' => $id]);
+  wp_send_json([
+    'id' => $id,
+    'editURL' => get_edit_post_link($id, '')
+  ]);
 });
 
 /**
@@ -87,4 +90,30 @@ add_action('wp_ajax_wpkanban_persist_card_delete', function () {
   wp_delete_post($_POST['id'], true);
   
   wp_die();
+});
+
+/**
+ * Persist metabox open state
+ */
+add_action('wp_ajax_wpkanban_persist_dashboard_metabox_open_state', function () {
+  check_ajax_referer('wpkanban');
+
+  update_option('wpkanban_is_dashboard_metabox_closed', $_POST['isClosed']);
+  
+  wp_send_json([
+    'isClosed' => $_POST['isClosed']
+  ]);
+  wp_die();
+});
+
+/**
+ * Change the board
+ */
+add_action('wp_ajax_wpkanban_change_dashboard_board', function () {
+  check_ajax_referer('wpkanban');
+
+  $board = wpkanban_generate_board_json($_POST['board']);
+  update_option('wpkanban_selected_dashboard_board', $_POST['board']);
+  
+  wp_send_json($board);
 });

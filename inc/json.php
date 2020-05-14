@@ -1,17 +1,29 @@
 <?php
 
-function wpkanban_generate_board_json () {
-  $board = get_terms([
+/**
+ * Generates Board data
+ * - List of cards
+ * - Board meta data
+ */
+function wpkanban_generate_board_json ($boardIdToSelect = false) {
+  $boardList = get_terms([
     'taxonomy' => 'wpkanban_board',
     'parent' => 0,
     'hide_empty' => false
   ]);
 
-  if (count($board)) {
-    $board = $board[0];
+  if (count($boardList)) {
+    // Get selected board
+    if ($boardIdToSelect) {
+      $selectedBoardId = $boardIdToSelect;
+    } else {
+      $selectedBoardId = get_option('wpkanban_selected_dashboard_board', $boardList[0]->term_id);
+    }
+    
+    // Get lists for selected board
     $lists = get_terms([
       'taxonomy' => 'wpkanban_board',
-      'parent' => $board->term_id,
+      'parent' => $selectedBoardId,
       'hide_empty' => false,
       'orderby' => 'meta_value_num',
       'order' => 'ASC',
@@ -19,6 +31,17 @@ function wpkanban_generate_board_json () {
       'meta_compare' => 'NUMERIC'
     ]);
 
+    // If the list is empty, try again in case user manually created
+    // the lists (ie, "order" is null)
+    if (!count($lists)) {
+      $lists = get_terms([
+        'taxonomy' => 'wpkanban_board',
+        'parent' => $selectedBoardId,
+        'hide_empty' => false
+      ]);  
+    }
+
+    // Get card data
     foreach ($lists as $key => $list) {
       $lists[$key]->cards = [];
 
@@ -46,11 +69,26 @@ function wpkanban_generate_board_json () {
         }
       }
     }
+
+    // Generate list of boards
+    $boards = [];
+    foreach ($boardList as $board) {
+      $boards[$board->slug] = [
+        'title' => $board->name,
+        'id' => $board->term_id
+      ];
+    }
+
+    // Board metadata
+    $isDashboardMetaboxClosed = get_option('wpkanban_is_dashboard_metabox_closed', false);
+
+    return [
+      'boards' => $boards,
+      'currentBoard' => $selectedBoardId,
+      'isDashboardMetaboxClosed' => $isDashboardMetaboxClosed == 'true' ? true : false,
+      'lists' => $lists,
+      'ajaxurl' => admin_url('admin-ajax.php'),
+      'nonce' => wp_create_nonce('wpkanban')
+    ];
   }
-  
-  wp_localize_script('wpkanban-vue', 'WPKanban', [
-    'lists' => $lists,
-    'ajaxurl' => admin_url('admin-ajax.php'),
-    'nonce' => wp_create_nonce('wpkanban')
-  ]);
 }
