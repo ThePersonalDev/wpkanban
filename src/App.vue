@@ -8,14 +8,20 @@
         h2.hndle
           span WP Kanban
         .inside
+          Toolbar
           router-view
 </template>
 
 <script>
 import board from './store/mock'
 import {mapState} from 'vuex'
+import Toolbar from './components/Toolbar'
 
 export default {
+  components: {
+    Toolbar
+  },
+  
   computed: {
     ...mapState(['board'])
   },

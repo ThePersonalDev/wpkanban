@@ -11,6 +11,7 @@ function wpkanban_register_cpt () {
     ],
     'public' => true,
     'hierarchical' => true,
+    'show_in_rest' => true,
     'rewrite' => ['slug' => 'wpkanban-board']
   ]);
 

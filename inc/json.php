@@ -6,17 +6,16 @@
  * - Board meta data
  */
 function wpkanban_generate_board_json () {
-  $board = get_terms([
+  $boardList = get_terms([
     'taxonomy' => 'wpkanban_board',
     'parent' => 0,
     'hide_empty' => false
   ]);
 
-  if (count($board)) {
-    $board = $board[0];
+  if (count($boardList)) {
     $lists = get_terms([
       'taxonomy' => 'wpkanban_board',
-      'parent' => $board->term_id,
+      'parent' => $boardList[0]->term_id,
       'hide_empty' => false,
       'orderby' => 'meta_value_num',
       'order' => 'ASC',
@@ -54,11 +53,21 @@ function wpkanban_generate_board_json () {
     }
   }
 
+  // Generate list of boards
+  $boards = [];
+  foreach ($boardList as $board) {
+    $boards[$board->slug] = [
+      'title' => $board->name,
+      'slug' => $board->slug
+    ];
+  }
+
   // Board metadata
   $isDashboardMetaboxClosed = get_option('wpkanban_is_dashboard_metabox_closed', false);
  
   // Include script
   wp_localize_script('wpkanban-vue', 'WPKanban', [
+    'boards' => $boards,
     'isDashboardMetaboxClosed' => $isDashboardMetaboxClosed == 'true' ? true : false,
     'lists' => $lists,
     'ajaxurl' => admin_url('admin-ajax.php'),
