@@ -21,12 +21,15 @@ add_action('load-index.php', function () {
   add_action('admin_enqueue_scripts', function () {
     $plugin_data = get_plugin_data(__FILE__);
 
+    // WPKanban
     wp_enqueue_style('wpkanban', plugin_dir_url(__FILE__) . '/dist/css/app.css', [], $plugin_data['Version']);
-
     wp_enqueue_script('wpkanban-vue-vendor', plugin_dir_url(__FILE__) . '/dist/js/chunk-vendors.js', [], $plugin_data['Version'], true);
     wp_enqueue_script('wpkanban-vue', plugin_dir_url(__FILE__) . '/dist/js/app.js', [], $plugin_data['Version'], true);
-
     wp_localize_script('wpkanban-vue', 'WPKanban', wpkanban_generate_board_json());
+    
+    // Modals
+    wp_enqueue_script('thickbox');
+    wp_enqueue_style('thickbox');
   });
 
   add_action('admin_notices', function () { ?>
