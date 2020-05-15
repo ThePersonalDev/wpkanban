@@ -94,5 +94,5 @@ export default {
     }
   ],
   "ajaxurl": "http://thepersonaldev.local/wp-admin/admin-ajax.php",
-  "nonce": "c4d01ffa8f"
+  "nonce": "7a06dc390b"
 }
