@@ -117,3 +117,14 @@ add_action('wp_ajax_wpkanban_change_dashboard_board', function () {
   
   wp_send_json($board);
 });
+
+/**
+ * Create a board and change to it
+ */
+add_action('wp_ajax_wpkanban_create_board', function () {
+  check_ajax_referer('wpkanban');
+
+  $boardId = wpkanban_create_board($_POST['title']);
+
+  wp_send_json(wpkanban_generate_board_json($boardId));
+});

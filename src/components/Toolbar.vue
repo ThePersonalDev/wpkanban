@@ -29,6 +29,9 @@ export default {
   }),
 
   methods: {
+    /**
+     * Change board with dropdown
+     */
     loadBoard () {
       if (this.board.ajaxurl) {
         let data = new FormData()
@@ -43,6 +46,9 @@ export default {
       }
     },
 
+    /**
+     * Show the create board modal (via thickbox)
+     */
     showCreateBoardModal () {
       this.newBoardTitle = ''
 
@@ -57,12 +63,28 @@ export default {
       })
     },
 
+    /**
+     * Close modal (via thickbox)
+     */
     closeModal () {
       window.jQuery('#TB_closeWindowButton').click()
     },
 
+    /**
+     * Create a new board and switch to it
+     */
     createBoard () {
       if (this.newBoardTitle) {
+        let data = new FormData()
+
+        data.append('action', 'wpkanban_create_board')
+        data.append('_ajax_nonce', this.board.nonce)
+        data.append('title', this.newBoardTitle)
+
+        this.axios.post(this.board.ajaxurl, data).then(res => {
+          this.$store.commit('set', ['board', res.data])
+        })
+
         this.closeModal()
       }
     }
