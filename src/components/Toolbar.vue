@@ -4,18 +4,16 @@
       strong Board:
     select#wpkanban-board-selector(v-model.number='board.currentBoard' @change='loadBoard')
       option(v-for='opt in board.boards' :value='opt.id') {{opt.title}}
-    a.button.m-l-10.thickbox(href='#TB_inline?width=300&550&inlineId=wpkanban-create-board-modal' title='Create Board' @click='showCreateBoardModal') Create Board
+    a.button.m-l-10.thickbox(href='#TB_inline?width=300&height=150&inlineId=wpkanban-create-board-modal' title='Create Board' @click='showCreateBoardModal') Create Board
 
     #wpkanban-create-board-modal.hidden
       div.input-text-wrap
+        label(for='wpkanban-create-board-title')
+          strong Board Name
         div
-          label(for='wpkanban-create-board-title')
-            strong Board Name
-        div
-          input#wpkanban-create-board-title(ref='title' type='text' autocomplete='off' v-model='newBoardTitle')
+          input#wpkanban-create-board-title(ref='title' type='text' autocomplete='off' v-model='newBoardTitle' style='width: 100%' v-on:keyup.enter='createBoard') 
       p
-        button.button(@click='closeModal') Close
-        button.button.button-primary.m-l-10(@click='createBoard') Create Board
+        button.button.button-primary(:disabled='!newBoardTitle' @click='createBoard') Create Board
 </template>
 
 <script>
@@ -46,6 +44,8 @@ export default {
     },
 
     showCreateBoardModal () {
+      this.newBoardTitle = ''
+
       setTimeout(() => {
         const $tb = document.querySelector('#TB_window')
         $tb.style.width = '350px'
@@ -54,16 +54,17 @@ export default {
         $tb.style.top = '50%'
         $tb.style.marginTop = '-100px'
         this.$refs.title.focus()
-        console.log('test')
       })
     },
 
     closeModal () {
-      console.log('close modal')
+      window.jQuery('#TB_closeWindowButton').click()
     },
 
     createBoard () {
-      console.log('createBoard', this.newBoardTitle)
+      if (this.newBoardTitle) {
+        this.closeModal()
+      }
     }
   }
 }
