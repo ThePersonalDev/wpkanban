@@ -124,7 +124,9 @@ add_action('wp_ajax_wpkanban_change_dashboard_board', function () {
 add_action('wp_ajax_wpkanban_create_board', function () {
   check_ajax_referer('wpkanban');
 
-  $boardId = wpkanban_create_board($_POST['title']);
+  $boardId = wpkanban_create_board($_POST['title'], [
+    'createDefaultColumns' => $_POST['shouldCreateDefaultColumns']
+  ]);
 
   wp_send_json(wpkanban_generate_board_json($boardId));
 });

@@ -33,10 +33,11 @@ function wpkanban_register_cpt () {
  * Creates a board
  * @param title The title to use
  * @param description The description to display
+ * @param shouldCreateDefaults Whether to create default columns and cards
  * 
  * @return board->term_id
  */
-function wpkanban_create_board ($title, $description = '') {
+function wpkanban_create_board ($title, $description = '', $args = []) {
   // Default board
   $board = wp_insert_term($title, 'wpkanban_board', [
     'slug' => sanitize_title($title),
@@ -44,42 +45,46 @@ function wpkanban_create_board ($title, $description = '') {
   ]);
   update_option('wpkanban_selected_dashboard_board', $board['term_id']);
 
-  // Backlog list
-  $backlog = wp_insert_term('Backlog', 'wpkanban_board', [
-    'slug' => 'default-backlog',
-    'description' => 'For cards that are still being considered',
-    'parent' => $board['term_id']
-  ]);
-  update_term_meta($backlog['term_id'], 'order', 0);
-
-  // Create default posts
-  wpkanban_create_card($backlog['term_id'], ['title' => 'Card A', 'menu_order' => 0]);
-  wpkanban_create_card($backlog['term_id'], ['title' => 'Card B', 'menu_order' => 1]);
-  wpkanban_create_card($backlog['term_id'], ['title' => 'Card C', 'menu_order' => 2]);
+  if (array_key_exists($args, 'createDefaultColumns') && $args['createDefaultColumns']) {
+    // Backlog list
+    $backlog = wp_insert_term('Backlog', 'wpkanban_board', [
+      'slug' => 'default-backlog',
+      'description' => 'For cards that are still being considered',
+      'parent' => $board['term_id']
+    ]);
+    update_term_meta($backlog['term_id'], 'order', 0);
   
-  // Todo list
-  $todo = wp_insert_term('Todo', 'wpkanban_board', [
-    'slug' => 'default-todo',
-    'description' => 'For cards that haven\'t been started yet',
-    'parent' => $board['term_id']
-  ]);
-  update_term_meta($todo['term_id'], 'order', 1);
-
-  // Doing list
-  $doing = wp_insert_term('Doing', 'wpkanban_board', [
-    'slug' => 'default-doing',
-    'description' => 'For cards that are actively being worked on',
-    'parent' => $board['term_id']
-  ]);
-  update_term_meta($doing['term_id'], 'order', 2);
-
-  // Done list
-  $done = wp_insert_term('Done', 'wpkanban_board', [
-    'slug' => 'default-done',
-    'description' => 'For completed cards',
-    'parent' => $board['term_id']
-  ]);
-  update_term_meta($done['term_id'], 'order', 3);
+    // Create default posts
+    if (array_key_exists($args, 'createDefaultCards') && $args['createDefaultCards']) {
+      wpkanban_create_card($backlog['term_id'], ['title' => 'Card A', 'menu_order' => 0]);
+      wpkanban_create_card($backlog['term_id'], ['title' => 'Card B', 'menu_order' => 1]);
+      wpkanban_create_card($backlog['term_id'], ['title' => 'Card C', 'menu_order' => 2]);
+    }
+    
+    // Todo list
+    $todo = wp_insert_term('Todo', 'wpkanban_board', [
+      'slug' => 'default-todo',
+      'description' => 'For cards that haven\'t been started yet',
+      'parent' => $board['term_id']
+    ]);
+    update_term_meta($todo['term_id'], 'order', 1);
+  
+    // Doing list
+    $doing = wp_insert_term('Doing', 'wpkanban_board', [
+      'slug' => 'default-doing',
+      'description' => 'For cards that are actively being worked on',
+      'parent' => $board['term_id']
+    ]);
+    update_term_meta($doing['term_id'], 'order', 2);
+  
+    // Done list
+    $done = wp_insert_term('Done', 'wpkanban_board', [
+      'slug' => 'default-done',
+      'description' => 'For completed cards',
+      'parent' => $board['term_id']
+    ]);
+    update_term_meta($done['term_id'], 'order', 3);
+  }
 
   return $board['term_id'];
 }
