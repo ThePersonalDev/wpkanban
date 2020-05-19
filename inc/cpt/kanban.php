@@ -45,7 +45,7 @@ function wpkanban_create_board ($title, $description = '', $args = []) {
   ]);
   update_option('wpkanban_selected_dashboard_board', $board['term_id']);
 
-  if (array_key_exists($args, 'createDefaultColumns') && $args['createDefaultColumns']) {
+  if (array_key_exists('createDefaultColumns', $args) && $args['createDefaultColumns']) {
     // Backlog list
     $backlog = wp_insert_term('Backlog', 'wpkanban_board', [
       'slug' => 'default-backlog',
@@ -55,7 +55,7 @@ function wpkanban_create_board ($title, $description = '', $args = []) {
     update_term_meta($backlog['term_id'], 'order', 0);
   
     // Create default posts
-    if (array_key_exists($args, 'createDefaultCards') && $args['createDefaultCards']) {
+    if (array_key_exists('createDefaultCards', $args) && $args['createDefaultCards']) {
       wpkanban_create_card($backlog['term_id'], ['title' => 'Card A', 'menu_order' => 0]);
       wpkanban_create_card($backlog['term_id'], ['title' => 'Card B', 'menu_order' => 1]);
       wpkanban_create_card($backlog['term_id'], ['title' => 'Card C', 'menu_order' => 2]);

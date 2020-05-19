@@ -90,7 +90,7 @@ export default {
      * Create a new board and switch to it
      */
     createBoard () {
-      if (this.newBoardTitle) {
+      if (this.newBoardTitle && this.board.ajaxurl) {
         let data = new FormData()
 
         data.append('action', 'wpkanban_create_board')
@@ -101,9 +101,8 @@ export default {
         this.axios.post(this.board.ajaxurl, data).then(res => {
           this.$store.commit('set', ['board', res.data])
         })
-
-        this.closeModal()
       }
+      this.closeModal()
     }
   }
 }
