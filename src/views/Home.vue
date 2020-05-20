@@ -1,26 +1,31 @@
 <template lang="pug">
-  div
-    Container.wpkanban-container(orientation='horizontal' @drop='onColumnDrop')
-      Draggable.wpkanban-list-column(v-for='(list, listIdx) in board.lists' :key='listIdx')
-        ListTitle(:list='list' :listIdx='listIdx')
-        Container(group-name='col' @drop='(e) => onCardDrop(list.term_id, e)' :get-child-payload='getCardPayload(list.term_id)')
-          Draggable.wpkanban-card-mini(v-for='(card, cardIdx) in list.cards' :key='cardIdx')
-            CardTitle(:card='card' :cardIdx='cardIdx' :listIdx='listIdx' :addedNewCard='addedNewCard' v-on:newCardMounted='addedNewCard = false')
-        button.button.wpkanban-add-new-list-button(@click='addNewCard(listIdx)') New card
-      .clear
+  .wpkanban-board-wrap
+    div
+      //- Columns
+      Container.wpkanban-container(orientation='horizontal' @drop='onColumnDrop')
+        Draggable.wpkanban-list-column(v-for='(list, listIdx) in board.lists' :key='listIdx')
+          ListTitle(:list='list' :listIdx='listIdx')
+          Container(group-name='col' @drop='(e) => onCardDrop(list.term_id, e)' :get-child-payload='getCardPayload(list.term_id)')
+            Draggable.wpkanban-card-mini(v-for='(card, cardIdx) in list.cards' :key='cardIdx')
+              CardTitle(:card='card' :cardIdx='cardIdx' :listIdx='listIdx' :addedNewCard='addedNewCard' v-on:newCardMounted='addedNewCard = false')
+          button.button.wpkanban-add-new-list-button(@click='addNewCard(listIdx)') New card
+        .clear
+
+      AddListButton
 </template>
 
 <script>
 import {Container, Draggable} from 'vue-smooth-dnd'
 import ListTitle from '@/components/ListTitle'
 import CardTitle from '@/components/CardTitle'
+import AddListButton from '@/components/AddListButton'
 import {mapState} from 'vuex'
 import {cloneDeep} from 'lodash'
 
 export default {
   name: 'Home',
 
-  components: {Container, Draggable, ListTitle, CardTitle},
+  components: {AddListButton, Container, Draggable, ListTitle, CardTitle},
   
   computed: {
     ...mapState(['board'])
