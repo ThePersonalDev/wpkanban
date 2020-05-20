@@ -68,7 +68,7 @@ export default {
         data.append('title', this.newListTitle)
         data.append('boardID', this.board.currentBoard.id)
         data.append('boardTitle', this.board.currentBoard.title)
-        data.append('order', this.board.lists.length)
+        data.append('order', this.board.lists.length + 1)
 
         this.axios.post(this.board.ajaxurl, data).then(res => {
           this.$store.commit('set', ['board', res.data])

@@ -82,12 +82,23 @@ add_action('wp_ajax_wpkanban_persist_new_card', function () {
 });
 
 /**
- * Deletes the psot
+ * Deletes the post
  */
 add_action('wp_ajax_wpkanban_persist_card_delete', function () {
   check_ajax_referer('wpkanban');
 
   wp_delete_post($_POST['id'], true);
+  
+  wp_die();
+});
+
+/**
+ * Deletes the list
+ */
+add_action('wp_ajax_wpkanban_persist_list_delete', function () {
+  check_ajax_referer('wpkanban');
+
+  wp_delete_term($_POST['id'], 'wpkanban_board');
   
   wp_die();
 });
