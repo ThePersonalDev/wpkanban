@@ -130,3 +130,14 @@ add_action('wp_ajax_wpkanban_create_board', function () {
 
   wp_send_json(wpkanban_generate_board_json($boardId));
 });
+
+/**
+ * Create a list
+ */
+add_action('wp_ajax_wpkanban_create_list', function () {
+  check_ajax_referer('wpkanban');
+
+  wpkanban_create_list($_POST['boardID'], $_POST['boardTitle'], $_POST['title'], $_POST['order']);
+
+  wp_send_json(wpkanban_generate_board_json($_POST['boardID']));
+});

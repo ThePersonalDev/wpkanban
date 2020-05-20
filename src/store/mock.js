@@ -7,9 +7,32 @@ export default {
     "ideas": {
       "title": "Ideas",
       "id": 42
+    },
+    "test": {
+      "title": "Test",
+      "id": 51
+    },
+    "test-1": {
+      "title": "Test 1",
+      "id": 61
+    },
+    "test-2": {
+      "title": "test 2",
+      "id": 62
+    },
+    "test-3": {
+      "title": "Test 3",
+      "id": 63
+    },
+    "test-4": {
+      "title": "Test 4",
+      "id": 68
     }
   },
-  "currentBoard": "30",
+  "currentBoard": {
+    "id": "30",
+    "title": "Default"
+  },
   "isDashboardMetaboxClosed": "",
   "lists": [
     {

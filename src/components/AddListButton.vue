@@ -5,12 +5,12 @@
   //- Add new list modal
   #wpkanban-create-list-modal.hidden
     div.input-text-wrap.tpd-m-t-10
-      label(for='wpkanban-create-board-title')
-        strong Board Name:
+      label(for='wpkanban-add-list-title')
+        strong List name:
       div.tpd-m-t-10
-        input#wpkanban-create-board-title(ref='title' type='text' autocomplete='off' v-model='newListTitle' style='width: 100%' v-on:keyup.enter='createBoard')
-    div
-      button.button.button-primary(:disabled='!newListTitle') Creat List
+        input#wpkanban-add-list-title(ref='title' type='text' autocomplete='off' v-model='newListTitle' style='width: 100%' v-on:keyup.enter='createList')
+    p.tpd-m-b-0
+      button.button.button-primary(:disabled='!newListTitle' @click='createList') Creat List
 </template>
 
 <script>
@@ -21,7 +21,7 @@ export default {
     ...mapState(['board']),
 
     thickboxURL: function () {
-      return `#TB_inline?width=${this.thickbox.width}&height=${this.thickbox.height}&inlineId=wpkanban-list-board-modal`
+      return `#TB_inline?width=${this.thickbox.width}&height=${this.thickbox.height}&inlineId=wpkanban-create-list-modal`
     }
   },
 
@@ -29,13 +29,52 @@ export default {
     newListTitle: '',
     thickbox: {
       width: 350,
-      height: 170
+      height: 140
     }
   }),
 
   methods: {
     showModal () {
-      console.log('show modal')
+      this.newListTitle = ''
+
+      setTimeout(() => {
+        const $modal = document.querySelector('#TB_window')
+        $modal.style.width = `${this.thickbox.width + 30}px`
+        $modal.style.height = `${this.thickbox.height + 30}px`
+        $modal.style.left = '50%'
+        $modal.style.top = '50%'
+        $modal.style.marginLeft = `${-this.thickbox.width / 2 - 15}px`
+        $modal.style.marginTop = `${-this.thickbox.height / 2 - 15}px`
+        this.$refs.title.focus()
+      })
+    },
+
+    /**
+     * Close modal (via thickbox)
+     */
+    closeModal () {
+      window.jQuery('#TB_closeWindowButton').click()
+    },
+
+    /**
+     * Create the list
+     */
+    createList () {
+      if (this.newListTitle && this.board.ajaxurl) {
+        let data = new FormData()
+
+        data.append('action', 'wpkanban_create_list')
+        data.append('_ajax_nonce', this.board.nonce)
+        data.append('title', this.newListTitle)
+        data.append('boardID', this.board.currentBoard.id)
+        data.append('boardTitle', this.board.currentBoard.title)
+        data.append('order', this.board.lists.length)
+
+        this.axios.post(this.board.ajaxurl, data).then(res => {
+          this.$store.commit('set', ['board', res.data])
+        })
+      }
+      this.closeModal()
     }
   }
 }

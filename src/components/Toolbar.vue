@@ -1,8 +1,8 @@
 <template lang="pug">
-  div(style='margin-bottom: 10px')
+  div(style='margin-bottom: 10px' v-if='board.currentBoard')
     label(for='wpkanban-board-selector' style='margin-right: 10px;')
       strong Board:
-    select#wpkanban-board-selector(v-model.number='board.currentBoard' @change='loadBoard')
+    select#wpkanban-board-selector(v-model.number='board.currentBoard.id' @change='loadBoard')
       option(v-for='opt in board.boards' :value='opt.id') {{opt.title}}
     a.button.tpd-m-l-10.thickbox(:href='thickboxURL' title='Create Board' @click='showCreateBoardModal') Create Board
 
@@ -52,7 +52,7 @@ export default {
 
         data.append('action', 'wpkanban_change_dashboard_board')
         data.append('_ajax_nonce', this.board.nonce)
-        data.append('board', this.board.currentBoard)
+        data.append('board', this.board.currentBoard.id)
 
         this.axios.post(this.board.ajaxurl, data).then(res => {
           this.$store.commit('set', ['board', res.data])
