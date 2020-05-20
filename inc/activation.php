@@ -30,7 +30,7 @@ function wpkanban_maybe_create_default_board () {
   ]);
 
   if (!count($boards)) {
-    wpkanban_create_board('Default', 'Your default WP Kanban board');
+    wpkanban_create_board('Default', 'Your default WP Kanban board', ['createDefaultColumns' => true, 'createDefaultCards' => true]);
 
     echo '<div class="updated notice is-dismissible"><p>WP Kanban: Created default board</p></div>';
   }

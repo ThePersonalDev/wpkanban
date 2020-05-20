@@ -1,6 +1,19 @@
-.wpkanban-container {
+.wpkanban-board-wrap {
   overflow-x: auto;
+  overflow-y: hidden;
+
+  > div {
+    white-space: nowrap;
+
+    > div {
+      display: inline-block;
+    }
+  }
+}
+
+.wpkanban-container {
   white-space: nowrap;
+  display: inline-block !important;
 }
 
 .wpkanban-list-column {

@@ -115,7 +115,7 @@ export default {
      */
     onDelete () {
       const board = cloneDeep(this.board)
-      const list = board.lists.splice(this.listIdx, 1)
+      const list = board.lists.splice(this.listIdx, 1)[0]
 
       this.$store.commit('set', ['board', board])
       this.isDropdownOpen = false
@@ -129,13 +129,11 @@ export default {
     persistListDeletion (list) {
       let data = new FormData()
 
-      data.append('action', 'wpkanban_persist_card_delete')
+      data.append('action', 'wpkanban_persist_list_delete')
       data.append('_ajax_nonce', this.board.nonce)
       data.append('id', list.term_id)
       
-      this.axios.post(this.board.ajaxurl, data).then(response => {
-        console.log('response', response)
-      })
+      this.axios.post(this.board.ajaxurl, data)
     }
   }
 }

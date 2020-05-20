@@ -82,12 +82,23 @@ add_action('wp_ajax_wpkanban_persist_new_card', function () {
 });
 
 /**
- * Deletes the psot
+ * Deletes the post
  */
 add_action('wp_ajax_wpkanban_persist_card_delete', function () {
   check_ajax_referer('wpkanban');
 
   wp_delete_post($_POST['id'], true);
+  
+  wp_die();
+});
+
+/**
+ * Deletes the list
+ */
+add_action('wp_ajax_wpkanban_persist_list_delete', function () {
+  check_ajax_referer('wpkanban');
+
+  wp_delete_term($_POST['id'], 'wpkanban_board');
   
   wp_die();
 });
@@ -124,7 +135,20 @@ add_action('wp_ajax_wpkanban_change_dashboard_board', function () {
 add_action('wp_ajax_wpkanban_create_board', function () {
   check_ajax_referer('wpkanban');
 
-  $boardId = wpkanban_create_board($_POST['title']);
+  $boardId = wpkanban_create_board($_POST['title'], '', [
+    'createDefaultColumns' => $_POST['shouldCreateDefaultColumns'] == 'true' ? true : false
+  ]);
 
   wp_send_json(wpkanban_generate_board_json($boardId));
+});
+
+/**
+ * Create a list
+ */
+add_action('wp_ajax_wpkanban_create_list', function () {
+  check_ajax_referer('wpkanban');
+
+  wpkanban_create_list($_POST['boardID'], $_POST['boardTitle'], $_POST['title'], $_POST['order']);
+
+  wp_send_json(wpkanban_generate_board_json($_POST['boardID']));
 });

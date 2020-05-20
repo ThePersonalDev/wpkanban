@@ -19,6 +19,13 @@ function wpkanban_generate_board_json ($boardIdToSelect = false) {
     } else {
       $selectedBoardId = get_option('wpkanban_selected_dashboard_board', $boardList[0]->term_id);
     }
+    $selectedBoard = get_terms([
+      'taxonomy' => 'wpkanban_board',
+      'parent' => 0,
+      'hide_empty' => false,
+      'include' => [$selectedBoardId]
+    ]);
+    $selectedBoard = $selectedBoard[0];
     
     // Get lists for selected board
     $lists = get_terms([
@@ -84,7 +91,10 @@ function wpkanban_generate_board_json ($boardIdToSelect = false) {
 
     return [
       'boards' => $boards,
-      'currentBoard' => $selectedBoardId,
+      'currentBoard' => [
+        'id' => $selectedBoardId,
+        'title' => $selectedBoard->name
+      ],
       'isDashboardMetaboxClosed' => $isDashboardMetaboxClosed == 'true' ? true : false,
       'lists' => $lists,
       'ajaxurl' => admin_url('admin-ajax.php'),
