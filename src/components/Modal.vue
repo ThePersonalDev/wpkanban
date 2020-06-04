@@ -13,6 +13,11 @@ export default {
   mounted () {
     setTimeout(() => {
       const $modal = document.querySelector('#TB_window')
+      const $modalInner = document.querySelector('#TB_ajaxContent')
+      
+      $modalInner.style.width = 'auto'
+      $modalInner.style.height = 'auto'
+
       $modal.style.width = `${this.thickbox.width + 30}px`
       $modal.style.height = `${this.thickbox.height + 30}px`
       $modal.style.left = '50%'
