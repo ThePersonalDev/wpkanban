@@ -4,15 +4,17 @@
       strong Board:
     select#wpkanban-board-selector(v-model.number='board.currentBoard.id' @change='loadBoard')
       option(v-for='opt in board.boards' :value='opt.id') {{opt.title}}
+    //- ManageBoardButton
     CreateBoardButton
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import CreateBoardButton from './button/CreateBoard'
+import ManageBoardButton from './button/ManageBoard'
 
 export default {
-  components: {CreateBoardButton},
+  components: {CreateBoardButton, ManageBoardButton},
   
   computed: {
     ...mapState(['board'])

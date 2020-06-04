@@ -32,6 +32,7 @@ export default {
   },
 
   destroyed () {
+    window.jQuery('#TB_closeWindowButton').click()
     window.jQuery('body').off('thickbox:removed', this.closeModal)
   },
 
