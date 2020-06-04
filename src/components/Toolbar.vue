@@ -4,7 +4,7 @@
       strong Board:
     select#wpkanban-board-selector(v-model.number='board.currentBoard.id' @change='loadBoard')
       option(v-for='opt in board.boards' :value='opt.id') {{opt.title}}
-    ManageBoardButton
+    //- ManageBoardButton
     CreateBoardButton
 </template>
 
