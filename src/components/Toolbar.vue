@@ -4,34 +4,19 @@
       strong Board:
     select#wpkanban-board-selector(v-model.number='board.currentBoard.id' @change='loadBoard')
       option(v-for='opt in board.boards' :value='opt.id') {{opt.title}}
-    a.button.tpd-m-l-10.thickbox(:href='thickboxURL' title='Create Board' @click='isModalVisible = true') Create Board
-
-    CreateBoardModal(v-if='isModalVisible' :thickbox='thickbox' v-on:close='isModalVisible = false')
+    CreateBoardButton
 </template>
 
 <script>
 import {mapState} from 'vuex'
-import CreateBoardModal from './modal/CreateBoardModal'
+import CreateBoardButton from './button/CreateBoard'
 
 export default {
-  components: {CreateBoardModal},
+  components: {CreateBoardButton},
   
   computed: {
-    ...mapState(['board']),
-
-    thickboxURL: function () {
-      return `#TB_inline?width=${this.thickbox.width}&height=${this.thickbox.height}&inlineId=wpkanban-create-board-modal`
-    }
+    ...mapState(['board'])
   },
-
-  data: () => ({
-    isModalVisible: false,
-    
-    thickbox: {
-      width: 350,
-      height: 170
-    }
-  }),
 
   methods: {
     /**
