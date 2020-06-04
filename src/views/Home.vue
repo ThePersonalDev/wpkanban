@@ -18,7 +18,7 @@
 import {Container, Draggable} from 'vue-smooth-dnd'
 import ListTitle from '@/components/ListTitle'
 import CardTitle from '@/components/CardTitle'
-import AddListButton from '@/components/AddListButton'
+import AddListButton from '@/components/button/AddList'
 import {mapState} from 'vuex'
 import {cloneDeep} from 'lodash'
 
