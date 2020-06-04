@@ -59,7 +59,7 @@ export default {
      * Create a new board and switch to it
      */
     updateBoard () {
-      console.log('updateBoard')
+      console.log('update')
       this.isModalVisible = false
     },
 
