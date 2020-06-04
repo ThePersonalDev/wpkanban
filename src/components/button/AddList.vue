@@ -3,7 +3,7 @@
   a.button.thickbox(:href='thickboxURL' title='Add new list' @click='showModal') Add new list
 
   //- Add new list modal
-  #wpkanban-create-list-modal.hidden
+  Modal#wpkanban-create-list-modal(v-if='isModalVisible' :thickbox='thickbox' v-on:close='isModalVisible = false')
     div.input-text-wrap.tpd-m-t-10
       label(for='wpkanban-add-list-title')
         strong List name:
@@ -14,9 +14,12 @@
 </template>
 
 <script>
+import Modal from '../Modal.vue'
 import {mapState} from 'vuex'
 
 export default {
+  components: {Modal},
+
   computed: {
     ...mapState(['board']),
 
@@ -27,6 +30,9 @@ export default {
 
   data: () => ({
     newListTitle: '',
+
+    isModalVisible: false,
+
     thickbox: {
       width: 350,
       height: 140
@@ -36,26 +42,9 @@ export default {
   methods: {
     showModal () {
       this.newListTitle = ''
-
-      setTimeout(() => {
-        const $modal = document.querySelector('#TB_window')
-        $modal.style.width = `${this.thickbox.width + 30}px`
-        $modal.style.height = `${this.thickbox.height + 30}px`
-        $modal.style.left = '50%'
-        $modal.style.top = '50%'
-        $modal.style.marginLeft = `${-this.thickbox.width / 2 - 15}px`
-        $modal.style.marginTop = `${-this.thickbox.height / 2 - 15}px`
-        this.$refs.title.focus()
-      })
+      this.isModalVisible = true
     },
-
-    /**
-     * Close modal (via thickbox)
-     */
-    closeModal () {
-      window.jQuery('#TB_closeWindowButton').click()
-    },
-
+    
     /**
      * Create the list
      */
@@ -74,7 +63,8 @@ export default {
           this.$store.commit('set', ['board', res.data])
         })
       }
-      this.closeModal()
+
+      this.isModalVisible = false
     }
   }
 }

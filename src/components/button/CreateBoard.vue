@@ -1,5 +1,5 @@
 <template lang="pug">
-  a.button.tpd-m-l-10.thickbox(:href='thickboxURL' title='Create Board' @click='isModalVisible = true')
+  a.button.tpd-m-l-10.thickbox(:href='thickboxURL' title='Create Board' @click='showModal')
     | Create Board
     Modal#wpkanban-create-board-modal(v-if='isModalVisible' :thickbox='thickbox' v-on:close='isModalVisible = false')
       div.input-text-wrap.tpd-m-t-10
@@ -43,6 +43,12 @@ export default {
   }),
 
   methods: {
+    showModal () {
+      this.shouldCreateDefaultColumns = true
+      this.newBoardTitle = ''
+      this.isModalVisible = true
+    },
+    
     /**
      * Create a new board and switch to it
      */
@@ -60,7 +66,7 @@ export default {
         })
       }
       
-      this.closeModal()
+      this.isModalVisible = false
     }
   }
 }
