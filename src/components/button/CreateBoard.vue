@@ -18,8 +18,11 @@
 <script>
 import Modal from '../Modal.vue'
 import {mapState} from 'vuex'
+import $ajax from '@/mixins/ajax'
 
 export default {
+  mixins: [$ajax],
+
   components: {Modal},
 
   computed: {
@@ -53,17 +56,11 @@ export default {
      * Create a new board and switch to it
      */
     createBoard () {
-      if (this.newBoardTitle && this.board.ajaxurl) {
-        let data = new FormData()
-
-        data.append('action', 'wpkanban_create_board')
-        data.append('_ajax_nonce', this.board.nonce)
-        data.append('title', this.newBoardTitle)
-        data.append('shouldCreateDefaultColumns', this.shouldCreateDefaultColumns)
-
-        this.axios.post(this.board.ajaxurl, data).then(res => {
-          this.$store.commit('set', ['board', res.data])
-        })
+      if (this.newBoardTitle) {
+        this.post('wpkanban_create_board', {
+          title: this.newBoardTitle,
+          shouldCreateDefaultColumns: this.shouldCreateDefaultColumns
+        }, res => this.$store.commit('set', ['board', res.data]))
       }
       
       this.isModalVisible = false

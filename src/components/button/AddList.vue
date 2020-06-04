@@ -52,7 +52,7 @@ export default {
      * Create the list
      */
     createList () {
-      if (this.newListTitle && this.board.ajaxurl) {
+      if (this.newListTitle) {
         this.post('wpkanban_create_list', {
           title: this.newListTitle,
           boardID: this.board.currentBoard.id,

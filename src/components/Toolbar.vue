@@ -12,8 +12,11 @@
 import {mapState} from 'vuex'
 import CreateBoardButton from './button/CreateBoard'
 import ManageBoardButton from './button/ManageBoard'
+import $ajax from '@/mixins/ajax'
 
 export default {
+  mixins: [$ajax],
+  
   components: {CreateBoardButton, ManageBoardButton},
   
   computed: {
@@ -25,17 +28,9 @@ export default {
      * Change board with dropdown
      */
     loadBoard () {
-      if (this.board.ajaxurl) {
-        let data = new FormData()
-
-        data.append('action', 'wpkanban_change_dashboard_board')
-        data.append('_ajax_nonce', this.board.nonce)
-        data.append('board', this.board.currentBoard.id)
-
-        this.axios.post(this.board.ajaxurl, data).then(res => {
-          this.$store.commit('set', ['board', res.data])
-        })
-      }
+      this.post('wpkanban_change_dashboard_board', {
+        board: this.board.currentBoard.id
+      }, res => this.$store.commit('set', ['board', res.data]))
     }
   }
 }
