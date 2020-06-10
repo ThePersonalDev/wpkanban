@@ -6,7 +6,7 @@
         label(for='wpkanban-manage-board-title')
           strong Board Name:
         div.tpd-m-t-10
-          input#wpkanban-manage-board-title(ref='title' type='text' autocomplete='off' v-model='newBoardTitle' style='width: 100%' v-on:keyup.enter='createBoard')
+          input#wpkanban-manage-board-title(ref='title' type='text' autocomplete='off' v-model='newBoardTitle' style='width: 100%' v-on:keyup.enter='updateBoard')
       p
         button.button.button-primary(:disabled='!newBoardTitle' @click='updateBoard') Update Board
         button.button.button-error.tpd-float-r(@click='deleteBoard') Delete Board
@@ -15,8 +15,11 @@
 <script>
 import Modal from '../Modal.vue'
 import {mapState} from 'vuex'
+import $ajax from '@/mixins/ajax'
 
 export default {
+  mixins: [$ajax],
+  
   components: {Modal},
 
   computed: {
@@ -56,10 +59,16 @@ export default {
     },
     
     /**
-     * Create a new board and switch to it
+     * Update the boards name
      */
     updateBoard () {
-      console.log('update')
+      if (this.newBoardTitle) {
+        this.post('wpkanban_update_board', {
+          title: this.newBoardTitle,
+          boardId: this.board.currentBoard.id
+        }, res => this.$store.commit('set', ['board', res.data]))
+      }
+
       this.isModalVisible = false
     },
 

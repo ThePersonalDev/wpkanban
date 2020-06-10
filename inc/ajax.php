@@ -152,3 +152,17 @@ add_action('wp_ajax_wpkanban_create_list', function () {
 
   wp_send_json(wpkanban_generate_board_json($_POST['boardID']));
 });
+
+/**
+ * Update board
+ */
+add_action('wp_ajax_wpkanban_update_board', function () {
+  check_ajax_referer('wpkanban');
+
+  wp_update_term($_POST['boardId'], 'wpkanban_board', [
+    'name' => $_POST['title'],
+    'slug' => sanitize_title($_POST['title'])
+  ]);
+
+  wp_send_json(wpkanban_generate_board_json($_POST['boardId']));
+});

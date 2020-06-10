@@ -4,6 +4,9 @@ export default {
   methods: {
     /**
      * Post data to WordPress
+     * @param {string} action The wordpress action to use
+     * @param {object} payload The data to send
+     * @param {function} cb Optional callback to call (gets passed a response object)
      */
     post: function (action, payload, cb) {
       if (this.board.ajaxurl) {
