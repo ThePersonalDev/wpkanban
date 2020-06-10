@@ -9,7 +9,7 @@
           input#wpkanban-manage-board-title(ref='title' type='text' autocomplete='off' v-model='newBoardTitle' style='width: 100%' v-on:keyup.enter='updateBoard')
       p
         button.button.button-primary(:disabled='!newBoardTitle' @click='updateBoard') Update Board
-        button.button.button-error.tpd-float-r(@click='deleteBoard') Delete Board
+        button.button.button-errort.tpd-float-r(@click='deleteBoard') Delete Board
 </template>
 
 <script>
@@ -72,9 +72,17 @@ export default {
       this.isModalVisible = false
     },
 
+    /**
+     * Prompt user to actually delete
+     */
     deleteBoard () {
-      console.log('delete')
-      this.isModalVisible = false
+      if (confirm('Are you sure that you want to delete this board?')) {
+        this.post('wpkanban_delete_board', {
+          boardId: this.board.currentBoard.id
+        }, res => console.log(res.data)) //}, res => this.$store.commit('set', ['board', res.data]))
+
+        this.isModalVisible = false
+      }
     }
   }
 }
