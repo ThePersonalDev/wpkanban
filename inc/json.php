@@ -4,6 +4,8 @@
  * Generates Board data
  * - List of cards
  * - Board meta data
+ * 
+ * @param $boardIdToSelect The board ID to select
  */
 function wpkanban_generate_board_json ($boardIdToSelect = false) {
   $boardList = get_terms([
@@ -25,6 +27,12 @@ function wpkanban_generate_board_json ($boardIdToSelect = false) {
       'hide_empty' => false,
       'include' => [$selectedBoardId]
     ]);
+
+    // No boards found
+    if (!$selectedBoard) {
+      return wpkanban_generate_empty_board_json();
+    }
+    
     $selectedBoard = $selectedBoard[0];
     
     // Get lists for selected board
@@ -88,7 +96,6 @@ function wpkanban_generate_board_json ($boardIdToSelect = false) {
 
     // Board metadata
     $isDashboardMetaboxClosed = get_option('wpkanban_is_dashboard_metabox_closed', false);
-
     return [
       'boards' => $boards,
       'currentBoard' => [
@@ -101,4 +108,25 @@ function wpkanban_generate_board_json ($boardIdToSelect = false) {
       'nonce' => wp_create_nonce('wpkanban')
     ];
   }
+  
+  return wpkanban_generate_empty_board_json();
+}
+
+/**
+ * Genertes empty board data
+ */
+function wpkanban_generate_empty_board_json () {
+  $isDashboardMetaboxClosed = get_option('wpkanban_is_dashboard_metabox_closed', false);
+
+  return [
+    'boards' => null,
+    'currentBoard' => [
+      'id' => 0,
+      'title' => ''
+    ],
+    'isDashboardMetaboxClosed' => $isDashboardMetaboxClosed == 'true' ? true : false,
+    'lists' => [],
+    'ajaxurl' => admin_url('admin-ajax.php'),
+    'nonce' => wp_create_nonce('wpkanban')
+  ];
 }

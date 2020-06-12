@@ -152,3 +152,71 @@ add_action('wp_ajax_wpkanban_create_list', function () {
 
   wp_send_json(wpkanban_generate_board_json($_POST['boardID']));
 });
+
+/**
+ * Update board
+ */
+add_action('wp_ajax_wpkanban_update_board', function () {
+  check_ajax_referer('wpkanban');
+
+  wp_update_term($_POST['boardId'], 'wpkanban_board', [
+    'name' => $_POST['title'],
+    'slug' => sanitize_title($_POST['title'])
+  ]);
+
+  wp_send_json(wpkanban_generate_board_json($_POST['boardId']));
+});
+
+/**
+ * Delete board
+ * - Deletes all lists and cards
+ * - Selects the first board
+ */
+add_action('wp_ajax_wpkanban_delete_board', function () {
+  check_ajax_referer('wpkanban');
+
+  // Select lists to delete
+  $lists = get_term_children($_POST['boardId'], 'wpkanban_board');
+
+  // Get all posts belonging to lists
+  $cards = get_posts([
+    'post_type' => 'wpkanban',
+    'numberposts' => -1,
+    'tax_query' => [
+      [
+        'taxonomy' => 'wpkanban_board',
+        'field' => 'term_id',
+        'terms' => $_POST['boardId']
+      ]
+    ]
+  ]);
+
+  // Delete all posts
+  foreach ($cards as $card) {
+    wp_delete_post($card->ID);
+  }
+
+  // Delete all lists
+  foreach ($lists as $list) {
+    wp_delete_term($list, 'wpkanban_board');
+  }
+  wp_delete_term($_POST['boardId'], 'wpkanban_board');
+
+  // Select a random board
+  $boards = get_terms([
+    'taxonomy' => 'wpkanban_board',
+    'parent' => 0,
+    'hide_empty' => false
+  ]);
+
+  if ($boards) {
+    $newBoard = wpkanban_generate_board_json($boards[0]->term_id);
+  } else {
+    $newBoard = wpkanban_generate_empty_board_json();
+  }
+  
+  // Select the board
+  update_option('wpkanban_selected_dashboard_board', $newBoard['currentBoard']['id']);
+  
+  wp_send_json($newBoard);
+});

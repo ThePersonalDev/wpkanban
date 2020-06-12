@@ -16,9 +16,12 @@
 <script>
 import Modal from '../Modal.vue'
 import {mapState} from 'vuex'
+import $ajax from '@/mixins/ajax'
 
 export default {
   components: {Modal},
+
+  mixins: [$ajax],
 
   computed: {
     ...mapState(['board']),
@@ -49,17 +52,13 @@ export default {
      * Create the list
      */
     createList () {
-      if (this.newListTitle && this.board.ajaxurl) {
-        let data = new FormData()
-
-        data.append('action', 'wpkanban_create_list')
-        data.append('_ajax_nonce', this.board.nonce)
-        data.append('title', this.newListTitle)
-        data.append('boardID', this.board.currentBoard.id)
-        data.append('boardTitle', this.board.currentBoard.title)
-        data.append('order', this.board.lists.length + 1)
-
-        this.axios.post(this.board.ajaxurl, data).then(res => {
+      if (this.newListTitle) {
+        this.post('wpkanban_create_list', {
+          title: this.newListTitle,
+          boardID: this.board.currentBoard.id,
+          boardTitle: this.board.currentBoard.title,
+          order: this.board.lists.length + 1
+        }, res => {
           this.$store.commit('set', ['board', res.data])
         })
       }

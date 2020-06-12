@@ -12,9 +12,12 @@ import {debounce, cloneDeep} from 'lodash'
 import {mapState} from 'vuex'
 import CardDropdown from './CardDropdown'
 import DropdownIcon from './DropdownIcon'
+import $ajax from '@/mixins/ajax'
 
 export default {
   name: 'CardTitle',
+  
+  mixins: [$ajax],
   
   components: {CardDropdown, DropdownIcon},
   
@@ -67,23 +70,17 @@ export default {
     onTitleChange (ev) {
       this.title = ev.target.innerText
 
-      if (this.board.ajaxurl) {
-        this.persistTitle()
-      }
+      this.persistTitle()
     },
 
     /**
      * Persist title to server
      */
     persistTitle: debounce(function () {
-      let data = new FormData()
-
-      data.append('action', 'wpkanban_update_card_title')
-      data.append('_ajax_nonce', this.board.nonce)
-      data.append('title', this.title)
-      data.append('cardId', this.card.id)
-
-      this.axios.post(this.board.ajaxurl, data)
+      this.post('wpkanban_update_card_title', {
+        title: this.title,
+        cardId: this.card.id
+      })
     }, 250, {trailing: true}),
 
     /**
@@ -140,20 +137,16 @@ export default {
       this.$store.commit('set', ['board', board])
       this.isDropdownOpen = false
 
-      this.board.ajaxurl && this.persistCardDeletion(card)
+      this.persistCardDeletion(card)
     },
 
     /**
      * Delete the card on WordPress
      */
     persistCardDeletion (card) {
-      let data = new FormData()
-
-      data.append('action', 'wpkanban_persist_card_delete')
-      data.append('_ajax_nonce', this.board.nonce)
-      data.append('id', card.id)
-      
-      this.axios.post(this.board.ajaxurl, data)
+      this.post('wpkanban_persist_card_delete', {
+        id: card.id
+      })
     }
   }
 }

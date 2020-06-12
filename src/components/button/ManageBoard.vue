@@ -6,17 +6,21 @@
         label(for='wpkanban-manage-board-title')
           strong Board Name:
         div.tpd-m-t-10
-          input#wpkanban-manage-board-title(ref='title' type='text' autocomplete='off' v-model='newBoardTitle' style='width: 100%' v-on:keyup.enter='createBoard')
+          input#wpkanban-manage-board-title(ref='title' type='text' autocomplete='off' v-model='newBoardTitle' style='width: 100%' v-on:keyup.enter='updateBoard')
       p
-        button.button.button-primary(:disabled='!newBoardTitle' @click='updateBoard') Update Board
-        button.button.button-error.tpd-float-r(@click='deleteBoard') Delete Board
+        button.button.tpd-button-error(@click='deleteBoard') Delete Board
+        button.button.button-primary.tpd-float-r(:disabled='!newBoardTitle' @click='updateBoard') Update Board
 </template>
 
 <script>
 import Modal from '../Modal.vue'
 import {mapState} from 'vuex'
+import {cloneDeep} from 'lodash'
+import $ajax from '@/mixins/ajax'
 
 export default {
+  mixins: [$ajax],
+  
   components: {Modal},
 
   computed: {
@@ -56,16 +60,32 @@ export default {
     },
     
     /**
-     * Create a new board and switch to it
+     * Update the boards name
      */
     updateBoard () {
-      console.log('updateBoard')
+      if (this.newBoardTitle) {
+        this.post('wpkanban_update_board', {
+          title: this.newBoardTitle,
+          boardId: this.board.currentBoard.id
+        }, res => this.$store.commit('set', ['board', res.data]))
+      }
+
       this.isModalVisible = false
     },
 
+    /**
+     * Prompt user to actually delete
+     * 
+     * - Selects next board
+     */
     deleteBoard () {
-      console.log('delete')
-      this.isModalVisible = false
+      if (confirm('Are you sure that you want to delete this board?')) {
+        this.post('wpkanban_delete_board', {
+          boardId: this.board.currentBoard.id
+        }, res => this.$store.commit('set', ['board', res.data]))
+
+        this.isModalVisible = false
+      }
     }
   }
 }

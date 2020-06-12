@@ -16,8 +16,11 @@
 import board from './store/mock'
 import {mapState} from 'vuex'
 import Toolbar from './components/Toolbar'
+import $ajax from '@/mixins/ajax'
 
 export default {
+  mixins: [$ajax],
+  
   components: {
     Toolbar
   },
@@ -43,15 +46,9 @@ export default {
     togglePostbox () {
       this.$store.commit('set', ['board.isDashboardMetaboxClosed', !this.board.isDashboardMetaboxClosed])
 
-      if (this.board.ajaxurl) {
-        let data = new FormData()
-  
-        data.append('action', 'wpkanban_persist_dashboard_metabox_open_state')
-        data.append('_ajax_nonce', this.board.nonce)
-        data.append('isClosed', this.board.isDashboardMetaboxClosed)
-  
-        this.axios.post(this.board.ajaxurl, data)
-      }
+      this.post('wpkanban_persist_dashboard_metabox_open_state', {
+        isClosed: this.board.isDashboardMetaboxClosed
+      })
     }
   }
 }

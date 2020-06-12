@@ -1,0 +1,17 @@
+.button.tpd-button-error,
+.button.tpd-button-error:focus {
+  background:$color-error;
+  border-color: darken($color-error, 5%);
+  color: #fff;
+
+  &:hover, &:active {
+    background: darken($color-error, 5%);
+    border-color: darken($color-error, 10%);
+    color: #fff;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 2px $color-error;
+    border: 1px solid #fff;
+  }
+}

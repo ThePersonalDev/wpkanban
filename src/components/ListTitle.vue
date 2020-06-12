@@ -12,9 +12,12 @@ import {debounce, cloneDeep} from 'lodash'
 import {mapState} from 'vuex'
 import DropdownIcon from './DropdownIcon'
 import CardDropdown from './CardDropdown'
+import $ajax from '@/mixins/ajax'
 
 export default {
   name: 'ColumnTitle',
+
+  mixins: [$ajax],
 
   components: {DropdownIcon, CardDropdown},
   
@@ -65,15 +68,11 @@ export default {
     /**
      * Persist title on server
      */
-    persistTitle: debounce(function (ev) {      
-      let data = new FormData()
-
-      data.append('action', 'wpkanban_update_list_title')
-      data.append('_ajax_nonce', this.board.nonce)
-      data.append('title', this.title)
-      data.append('listId', this.list.term_id)
-
-      this.axios.post(this.board.ajaxurl, data)
+    persistTitle: debounce(function (ev) {
+      this.post('wpkanban_update_list_title', {
+        title: this.title,
+        listId: this.list.term_id
+      })
     }, 500, {trailing: true}),
 
     /**
@@ -127,13 +126,9 @@ export default {
      * Delete the list on WordPress, including all of its cards
      */
     persistListDeletion (list) {
-      let data = new FormData()
-
-      data.append('action', 'wpkanban_persist_list_delete')
-      data.append('_ajax_nonce', this.board.nonce)
-      data.append('id', list.term_id)
-      
-      this.axios.post(this.board.ajaxurl, data)
+      this.post('wpkanban_persist_list_delete', {
+        id: list.term_id
+      })
     }
   }
 }

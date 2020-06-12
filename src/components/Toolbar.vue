@@ -3,8 +3,9 @@
     label(for='wpkanban-board-selector' style='margin-right: 10px;')
       strong Board:
     select#wpkanban-board-selector(v-model.number='board.currentBoard.id' @change='loadBoard')
+      option(v-if="!board.boards" value="" disabled selected) - No boards available -
       option(v-for='opt in board.boards' :value='opt.id') {{opt.title}}
-    //- ManageBoardButton
+    ManageBoardButton.button-primary(v-if='board.currentBoard.id')
     CreateBoardButton
 </template>
 
@@ -12,8 +13,11 @@
 import {mapState} from 'vuex'
 import CreateBoardButton from './button/CreateBoard'
 import ManageBoardButton from './button/ManageBoard'
+import $ajax from '@/mixins/ajax'
 
 export default {
+  mixins: [$ajax],
+  
   components: {CreateBoardButton, ManageBoardButton},
   
   computed: {
@@ -25,17 +29,9 @@ export default {
      * Change board with dropdown
      */
     loadBoard () {
-      if (this.board.ajaxurl) {
-        let data = new FormData()
-
-        data.append('action', 'wpkanban_change_dashboard_board')
-        data.append('_ajax_nonce', this.board.nonce)
-        data.append('board', this.board.currentBoard.id)
-
-        this.axios.post(this.board.ajaxurl, data).then(res => {
-          this.$store.commit('set', ['board', res.data])
-        })
-      }
+      this.post('wpkanban_change_dashboard_board', {
+        board: this.board.currentBoard.id
+      }, res => this.$store.commit('set', ['board', res.data]))
     }
   }
 }

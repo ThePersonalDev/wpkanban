@@ -21,9 +21,12 @@ import CardTitle from '@/components/CardTitle'
 import AddListButton from '@/components/button/AddList'
 import {mapState} from 'vuex'
 import {cloneDeep} from 'lodash'
+import $ajax from '@/mixins/ajax'
 
 export default {
   name: 'Home',
+
+  mixins: [$ajax],
 
   components: {AddListButton, Container, Draggable, ListTitle, CardTitle},
   
@@ -119,11 +122,10 @@ export default {
       this.board.lists.forEach(list => {
         order.push(list.term_id)
       })
-      data.append('action', 'wpkanban_persist_list_order')
-      data.append('_ajax_nonce', this.board.nonce)
-      data.append('order', JSON.stringify(order))
 
-      this.axios.post(this.board.ajaxurl, data)
+      this.post('wpkanban_persist_list_order', {
+        order: JSON.stringify(order)
+      })
     },
 
     /**
@@ -136,12 +138,11 @@ export default {
       this.board.lists[listIdx].cards.forEach(card => {
         order.push(card.id)
       })
-      data.append('action', 'wpkanban_persist_card_order')
-      data.append('_ajax_nonce', this.board.nonce)
-      data.append('order', JSON.stringify(order))
-      data.append('listId', this.board.lists[listIdx].term_id)
 
-      this.axios.post(this.board.ajaxurl, data)
+      this.post('wpkanban_persist_card_order', {
+        order: JSON.stringify(order),
+        listId: this.board.lists[listIdx].term_id
+      })
     },
 
     /**
@@ -151,16 +152,13 @@ export default {
       let data = new FormData()
       let lastCardIdx = this.board.lists[listIdx].cards.length - 1
 
-      data.append('action', 'wpkanban_persist_new_card')
-      data.append('_ajax_nonce', this.board.nonce)
-      data.append('listId', this.board.lists[listIdx].term_id)
-      data.append('order', lastCardIdx)
-
-      this.axios.post(this.board.ajaxurl, data)
-        .then(response => {
-          this.board.lists[listIdx].cards[lastCardIdx].id = response.data.id
-          this.board.lists[listIdx].cards[lastCardIdx].editURL = response.data.editURL
-        })
+      this.post('wpkanban_persist_new_card', {
+        listId: this.board.lists[listIdx].term_id,
+        order: lastCardIdx
+      }, res => {
+          this.board.lists[listIdx].cards[lastCardIdx].id = res.data.id
+          this.board.lists[listIdx].cards[lastCardIdx].editURL = res.data.editURL
+      })
     }
   }
 }
