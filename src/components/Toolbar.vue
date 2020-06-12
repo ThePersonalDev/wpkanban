@@ -3,8 +3,9 @@
     label(for='wpkanban-board-selector' style='margin-right: 10px;')
       strong Board:
     select#wpkanban-board-selector(v-model.number='board.currentBoard.id' @change='loadBoard')
+      option(v-if="!boards || !$board.boards.length" value="" disabled selected) - No boards available -
       option(v-for='opt in board.boards' :value='opt.id') {{opt.title}}
-    ManageBoardButton.button-primary
+    ManageBoardButton.button-primary(v-if='board.currentBoard.id')
     CreateBoardButton
 </template>
 

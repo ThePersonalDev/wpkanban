@@ -122,7 +122,7 @@ function wpkanban_generate_empty_board_json () {
     'boards' => null,
     'currentBoard' => [
       'id' => 0,
-      'title' => 'No boards available'
+      'title' => ''
     ],
     'isDashboardMetaboxClosed' => $isDashboardMetaboxClosed == 'true' ? true : false,
     'lists' => [],
