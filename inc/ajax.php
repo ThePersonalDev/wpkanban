@@ -202,5 +202,21 @@ add_action('wp_ajax_wpkanban_delete_board', function () {
   }
   wp_delete_term($_POST['boardId'], 'wpkanban_board');
 
-  wp_die();
+  // Select a random board
+  $boards = get_terms([
+    'taxonomy' => 'wpkanban_board',
+    'parent' => 0,
+    'hide_empty' => false
+  ]);
+
+  if ($boards) {
+    $newBoard = wpkanban_generate_board_json($boards[0]->term_id);
+  } else {
+    $newBoard = wpkanban_generate_empty_board_json();
+  }
+  
+  // Select the board
+  update_option('wpkanban_selected_dashboard_board', $newBoard['currentBoard']['id']);
+  
+  wp_send_json($newBoard);
 });
