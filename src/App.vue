@@ -9,7 +9,7 @@
           span WP Kanban
         .inside
           Toolbar
-          router-view
+          Home
 </template>
 
 <script>
@@ -17,11 +17,13 @@ import board from './store/mock'
 import {mapState} from 'vuex'
 import Toolbar from './components/Toolbar'
 import $ajax from '@/mixins/ajax'
+import Home from './views/Home'
 
 export default {
   mixins: [$ajax],
   
   components: {
+    Home,
     Toolbar
   },
   
