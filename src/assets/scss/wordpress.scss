@@ -15,3 +15,117 @@
     border: 1px solid #fff;
   }
 }
+
+.admin-color-coffee {
+  .button.tpd-button-error {
+    background: $color-error-admin-coffee;
+    border-color: darken($color-error-admin-coffee, 5%);
+    color: #fff;
+  
+    &:hover, &:active {
+      background: darken($color-error-admin-coffee, 5%);
+      border-color: darken($color-error-admin-coffee, 10%);
+      color: #fff;
+    }
+  
+    &:focus {
+      box-shadow: 0 0 0 2px $color-error-admin-coffee;
+      border: 1px solid #fff;
+    }
+  }
+}
+
+.admin-color-ectoplasm {
+  .button.tpd-button-error {
+    background: $color-error-admin-ectoplasm;
+    border-color: darken($color-error-admin-ectoplasm, 5%);
+    color: #fff;
+  
+    &:hover, &:active {
+      background: darken($color-error-admin-ectoplasm, 5%);
+      border-color: darken($color-error-admin-ectoplasm, 10%);
+      color: #fff;
+    }
+  
+    &:focus {
+      box-shadow: 0 0 0 2px $color-error-admin-ectoplasm;
+      border: 1px solid #fff;
+    }
+  }
+}
+
+.admin-color-ocean {
+  .button.tpd-button-error {
+    background: $color-error-admin-ocean;
+    border-color: darken($color-error-admin-ocean, 5%);
+    color: #fff;
+  
+    &:hover, &:active {
+      background: darken($color-error-admin-ocean, 5%);
+      border-color: darken($color-error-admin-ocean, 10%);
+      color: #fff;
+    }
+  
+    &:focus {
+      box-shadow: 0 0 0 2px $color-error-admin-ocean;
+      border: 1px solid #fff;
+    }
+  }
+}
+
+.admin-color-blue {
+  .button.tpd-button-error {
+    background: $color-error-admin-blue;
+    border-color: darken($color-error-admin-blue, 5%);
+    color: #fff;
+  
+    &:hover, &:active {
+      background: darken($color-error-admin-blue, 5%);
+      border-color: darken($color-error-admin-blue, 10%);
+      color: #fff;
+    }
+  
+    &:focus {
+      box-shadow: 0 0 0 2px $color-error-admin-blue;
+      border: 1px solid #fff;
+    }
+  }
+}
+
+.admin-color-midnight {
+  .button.tpd-button-error {
+    background: $color-error-admin-midnight;
+    border-color: darken($color-error-admin-midnight, 5%);
+    color: #fff;
+  
+    &:hover, &:active {
+      background: darken($color-error-admin-midnight, 5%);
+      border-color: darken($color-error-admin-midnight, 10%);
+      color: #fff;
+    }
+  
+    &:focus {
+      box-shadow: 0 0 0 2px $color-error-admin-midnight;
+      border: 1px solid #fff;
+    }
+  }
+}
+
+.admin-color-sunrise {
+  .button.tpd-button-error {
+    background: $color-error-admin-sunrise;
+    border-color: darken($color-error-admin-sunrise, 5%);
+    color: #fff;
+  
+    &:hover, &:active {
+      background: darken($color-error-admin-sunrise, 5%);
+      border-color: darken($color-error-admin-sunrise, 10%);
+      color: #fff;
+    }
+  
+    &:focus {
+      box-shadow: 0 0 0 2px $color-error-admin-sunrise;
+      border: 1px solid #fff;
+    }
+  }
+}
