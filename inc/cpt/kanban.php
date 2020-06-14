@@ -30,6 +30,13 @@ function wpkanban_register_cpt () {
 }
 
 /**
+ * Adds "contains comment" icon to card title by checking for content onSave
+ */
+add_action('save_post_wpkanban', function ($postID, $post) {
+  update_post_meta($postID, 'hasContent', !empty(trim($post->post_content)));
+}, 10, 2);
+
+/**
  * Creates a board
  * @param title The title to use
  * @param description The description to display

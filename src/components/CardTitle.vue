@@ -1,7 +1,7 @@
 <template lang="pug">
 .wpkanban-card-title
   .wpkanban-card-title-wrap(@click='onClick')
-    span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur') {{card.title}}
+    span(ref='title' :contenteditable='isEditable' @input='onTitleChange' @keypress='onTitleKeypress' @blur='onBlur' v-html='cardTitle')
   .wpkanban-card-title-icon-button(@click='openDropdown' :class='{"wpkanban-invisible": isDropdownOpen}')
     DropdownIcon
   CardDropdown(:isOpen='isDropdownOpen' v-on:close='isDropdownOpen = false' v-on:rename='onRename' v-on:remove='onDelete')
@@ -24,7 +24,18 @@ export default {
   props: ['card', 'cardIdx', 'listIdx', 'addedNewCard'],
 
   computed: {
-    ...mapState(['board'])
+    ...mapState(['board']),
+
+    /**
+     * Displays card flairs, like hasContent
+     */
+    cardTitle () {
+      if (this.card.hasContent) {
+        return `<div><div>${this.card.title}</div><div>📃</div></div>`
+      }
+
+      return this.card.title
+    }
   },
 
   watch: {

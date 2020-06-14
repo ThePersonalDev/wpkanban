@@ -1,119 +1,81 @@
 export default {
   "boards": {
-    "default": {
-      "title": "Default",
-      "id": 30
-    },
-    "ideas": {
-      "title": "Ideas",
-      "id": 42
-    },
     "test": {
       "title": "Test",
-      "id": 51
-    },
-    "test-1": {
-      "title": "Test 1",
-      "id": 61
-    },
-    "test-2": {
-      "title": "test 2",
-      "id": 62
-    },
-    "test-3": {
-      "title": "Test 3",
-      "id": 63
-    },
-    "test-4": {
-      "title": "Test 4",
-      "id": 68
+      "id": 282
     }
   },
   "currentBoard": {
-    "id": "30",
-    "title": "Default"
+    "id": "282",
+    "title": "Test"
   },
   "isDashboardMetaboxClosed": "",
   "lists": [
     {
-      "term_id": 31,
+      "term_id": 283,
       "name": "Backlog",
-      "slug": "backlog",
+      "slug": "test-backlog",
       "term_group": 0,
-      "term_taxonomy_id": 31,
+      "term_taxonomy_id": 283,
       "taxonomy": "wpkanban_board",
       "description": "For cards that are still being considered",
-      "parent": 30,
+      "parent": 282,
+      "count": 1,
+      "filter": "raw",
+      "cards": [
+        {
+          "title": "Should have content icon",
+          "id": 401,
+          "hasContent": "1",
+          "editURL": "http://thepersonaldev.local/wp-admin/post.php?post=401&action=edit"
+        }
+      ]
+    },
+    {
+      "term_id": 284,
+      "name": "Todo",
+      "slug": "test-todo",
+      "term_group": 0,
+      "term_taxonomy_id": 284,
+      "taxonomy": "wpkanban_board",
+      "description": "For cards that haven't been started yet",
+      "parent": 282,
+      "count": 1,
+      "filter": "raw",
+      "cards": [
+        {
+          "title": "Should NOT have content icon",
+          "id": 402,
+          "hasContent": "",
+          "editURL": "http://thepersonaldev.local/wp-admin/post.php?post=402&action=edit"
+        }
+      ]
+    },
+    {
+      "term_id": 285,
+      "name": "Doing",
+      "slug": "test-doing",
+      "term_group": 0,
+      "term_taxonomy_id": 285,
+      "taxonomy": "wpkanban_board",
+      "description": "For cards that are actively being worked on",
+      "parent": 282,
       "count": 0,
       "filter": "raw",
       "cards": []
     },
     {
-      "term_id": 32,
-      "name": "Todo",
-      "slug": "todo",
-      "term_group": 0,
-      "term_taxonomy_id": 32,
-      "taxonomy": "wpkanban_board",
-      "description": "For cards that haven't been started yet",
-      "parent": 30,
-      "count": 2,
-      "filter": "raw",
-      "cards": [
-        {
-          "title": "🎨 WP Kanbanner Theme",
-          "id": 318,
-          "editURL": "http://thepersonaldev.local/wp-admin/post.php?post=318&action=edit"
-        },
-        {
-          "title": "🔌 Link card blocks",
-          "id": 328,
-          "editURL": "http://thepersonaldev.local/wp-admin/post.php?post=328&action=edit"
-        }
-      ]
-    },
-    {
-      "term_id": 33,
-      "name": "Doing",
-      "slug": "default-doing",
-      "term_group": 0,
-      "term_taxonomy_id": 33,
-      "taxonomy": "wpkanban_board",
-      "description": "For cards that are actively being worked on",
-      "parent": 30,
-      "count": 2,
-      "filter": "raw",
-      "cards": [
-        {
-          "title": "🔌 Device mockup block",
-          "id": 322,
-          "editURL": "http://thepersonaldev.local/wp-admin/post.php?post=322&action=edit"
-        },
-        {
-          "title": "🔌 WP Kanbanner",
-          "id": 317,
-          "editURL": "http://thepersonaldev.local/wp-admin/post.php?post=317&action=edit"
-        }
-      ]
-    },
-    {
-      "term_id": 34,
+      "term_id": 286,
       "name": "Done",
-      "slug": "done",
+      "slug": "test-done",
       "term_group": 0,
-      "term_taxonomy_id": 34,
+      "term_taxonomy_id": 286,
       "taxonomy": "wpkanban_board",
       "description": "For completed cards",
-      "parent": 30,
-      "count": 1,
+      "parent": 282,
+      "count": 0,
       "filter": "raw",
-      "cards": [
-        {
-          "title": "🎨 Personal Theme",
-          "id": 316,
-          "editURL": "http://thepersonaldev.local/wp-admin/post.php?post=316&action=edit"
-        }
-      ]
+      "cards": []
     }
   ]
 }
