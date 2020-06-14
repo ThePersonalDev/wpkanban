@@ -79,6 +79,7 @@ function wpkanban_generate_board_json ($boardIdToSelect = false) {
           array_push($lists[$key]->cards, [
             'title' => $card->post_title,
             'id' => $card->ID,
+            'hasContent' => get_post_meta($card->ID, 'hasContent', true),
             'editURL' => get_edit_post_link($card->ID, '')
           ]);
         }
